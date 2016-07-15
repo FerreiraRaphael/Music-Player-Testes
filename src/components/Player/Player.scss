@@ -1,0 +1,30 @@
+.playerContainer{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+}
+.player{
+    display: flex;
+    width: 85%;
+    li{
+        margin: 0 15px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+    };
+}
+.player__backward{
+    div{ margin: 0 15px;}
+}
+.player__main{
+    flex-grow:1;
+}
+.player__forward{
+
+}
+.progress{
+    
+}
+.progress__bar{
+    flex-grow: 1;
+}
