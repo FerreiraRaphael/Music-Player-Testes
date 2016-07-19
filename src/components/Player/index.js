@@ -1,7 +1,6 @@
 // Import React
 import React from 'react';
 import classes from './Player.scss'
-import icones from './icones.scss'
 // Import ClassNames
 // import ClassNames from 'classnames';
 
@@ -48,7 +47,7 @@ class Player extends React.Component {
             <div onClick={this.props.backward}><i className={`fa fa-backward ${icons}`}/></div>
             {/*Play/Pause div*/}
             <div onClick={this.props.togglePlay}><i className={`${playPauseClass} ${icons}`}/></div>
-            <div onClick={this.props.forward}><i className={`${icones['icon-forward']} ${icons}`}/></div>
+            <div onClick={this.props.forward}><i className={`icon-forward ${icons}`}/></div>
           </li>
           <li className={player__main}>
             <span>0:00</span>
