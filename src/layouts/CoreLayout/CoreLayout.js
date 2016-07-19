@@ -5,12 +5,14 @@ import classes from './CoreLayout.scss'
 import '../../styles/core.scss'
 
 export const CoreLayout = ({ children }) => (
-  <div className='container text-center'>
-    <Header />
-    <div className={classes.mainContainer}>
-      {children}
-      <Player />
+  <div>
+    <div className='container text-center'>
+      <Header />
+      <div className={classes.mainContainer}>
+        {children}
+      </div>
     </div>
+    <Player />
   </div>
 )
 
