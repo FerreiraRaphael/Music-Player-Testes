@@ -1,58 +1,53 @@
+.icons{
+  font-size: 24px;
+}
 .player__container {
   width: 100%;
   position: fixed;
   bottom: 0;
   display: flex;
 }
-
 .player {
   display: flex;
   width: 100%;
-  position: fixed;
-  bottom: 0;
   margin: 0;
   padding: 0;
+  height: 50px;
   li {
-    margin: 0 15px;
     display: -webkit-flex; /* Safari */
     display: flex;
-    width: 85%;
-    margin: 0px auto;
-    padding: 5px 0;
-    height: 50px;
-    li {
-      margin: 0 15px;
-      display: -webkit-flex; /* Safari */
-      display: flex;
       div {
-        padding: 5px 0;
+        margin: 10px 15px;
       }
-    }
   }
 }
 .player__backward {
-  div {
+  /*div {
     margin: 0 15px;
-  }
+  }*/
 }
 .player__main{
     flex-grow:1;
+    span{
+      margin: 20px;
+    }
     .progress__bar, .progress{
         height: 5px;
+    }
+    .progress, .progress__bar, .progress__container{
+      padding: 0 !important;
+      margin: 0 !important;
     }
 }
 
 .player__forward {
-  i {
+  /*i {
     margin: 0 15px;
-  }
+  }*/
 }
-.progress, .progress__bar, .progress__container{
-    padding: 0 !important;
-}
+
 .progress__container{
     flex-grow: 1;
-    margin: 10px;
 }
 
 .progress__bar{
@@ -64,7 +59,6 @@
     position: relative;
     background: orange;
     width: 50%;
-
     &:after{
         content: '';
         position: absolute;
