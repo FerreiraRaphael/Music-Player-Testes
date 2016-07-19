@@ -1,6 +1,7 @@
 // Import React
 import React from 'react';
 import classes from './Player.scss'
+import icones from './icones.scss'
 // Import ClassNames
 // import ClassNames from 'classnames';
 
@@ -32,7 +33,7 @@ class Player extends React.Component {
     // Dynamic class names with ClassNames
     const playPauseClass =  this.props.playStatus ? 'fa fa-play' : 'fa fa-pause'
     const { icons, player, player__backward, player__forward, player__main, player__container,
-      progress, progress__bar, progress__container } = classes
+      player__timer, progress, progress__bar, progress__container} = classes
     // const playPauseClass = ClassNames({
     //   'fa fa-play': this.props.playStatus == 'PLAYING' ? false : true,
     //   'fa fa-pause': this.props.playStatus == 'PLAYING' ? true : false
@@ -44,23 +45,26 @@ class Player extends React.Component {
         <ul className={player}>
           {/*Rewind Button*/}
           <li className={player__backward}>
-            <div onClick={this.props.backward}><i className={`fa fa-backward ${icons}`}/></div>
+            <div onClick={this.props.backward}><i className={`${icones.icon_backward} ${icons}`}/></div>
             {/*Play/Pause div*/}
-            <div onClick={this.props.togglePlay}><i className={`${playPauseClass} ${icons}`}/></div>
-            <div onClick={this.props.forward}><i className={`icon-forward ${icons}`}/></div>
+            <div onClick={this.props.togglePlay}><i className={`${icones.icon_play} ${icons}`}/></div>
+            <div onClick={this.props.forward}><i className={`${icones.icon_forward} ${icons}`}/></div>
           </li>
           <li className={player__main}>
-            <span>0:00</span>
+            <span className={player__timer}>0:00</span>
             <div className={progress__container}>
               <div className={progress__bar}>
                 <div className={progress}></div>
               </div>
             </div>
-            <span>5:00</span>
+            <span className={player__timer}>5:00</span>
           </li>
           {/*Forward Button*/}
           <li className={player__forward}>
-            <div onClick={this.props.random}><i className={`icon-random ${icons}`}/></div>
+            <div onClick={this.props.random}><i className={`${icones.icon_volume} ${icons}`}/></div>
+            <div onClick={this.props.random}><i className={`${icones.icon_list} ${icons}`}/></div>
+            <div onClick={this.props.random}><i className={`${icones.icon_random} ${icons}`}/></div>
+            <div onClick={this.props.random}><i className={`${icones.icon_infinity} ${icons}`}/></div>
           </li>
         </ul>
       </div>
