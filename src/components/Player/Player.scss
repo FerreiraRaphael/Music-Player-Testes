@@ -12,8 +12,23 @@
     margin: 0 15px;
     display: -webkit-flex; /* Safari */
     display: flex;
+<<<<<<< HEAD
   }
 ;
+=======
+    width: 85%;
+    margin: 0px auto;
+    padding: 5px 0;
+    height: 50px;
+    li{
+        margin: 0 15px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        div{
+            padding: 5px 0;
+        }
+    };
+>>>>>>> master
 }
 
 .player__backward {
@@ -21,9 +36,17 @@
     margin: 0 15px;
   }
 }
+<<<<<<< HEAD
 
 .player__main {
   flex-grow: 1;
+=======
+.player__main{
+    flex-grow:1;
+    .progress__bar, .progress{
+        height: 5px;    
+    }
+>>>>>>> master
 }
 
 .player__forward {
@@ -31,6 +54,7 @@
     margin: 0 15px;
   }
 }
+<<<<<<< HEAD
 
 .progress {
   background: orange;
@@ -48,3 +72,34 @@
   height: 1px;
   background: #404040;
 }
+=======
+.progress, .progress__bar, .progress__container{
+    padding: 0 !important;
+}
+.progress__container{
+    flex-grow: 1;
+    margin: 10px;
+}
+
+.progress__bar{
+    width: 100%;
+    background: black;
+}
+
+.progress{
+    position: relative;
+    background: orange;
+    width: 50%;
+    
+    &:after{
+        content: '';
+        position: absolute;
+        right: -2px;
+        top: -4px;
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+        background: orange;
+    }
+}
+>>>>>>> master
