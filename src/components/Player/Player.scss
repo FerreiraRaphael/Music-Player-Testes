@@ -7,46 +7,39 @@
 
 .player {
   display: flex;
-  width: 85%;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
   li {
     margin: 0 15px;
     display: -webkit-flex; /* Safari */
     display: flex;
-<<<<<<< HEAD
-  }
-;
-=======
     width: 85%;
     margin: 0px auto;
     padding: 5px 0;
     height: 50px;
-    li{
-        margin: 0 15px;
-        display: -webkit-flex; /* Safari */
-        display: flex;
-        div{
-            padding: 5px 0;
-        }
-    };
->>>>>>> master
+    li {
+      margin: 0 15px;
+      display: -webkit-flex; /* Safari */
+      display: flex;
+      div {
+        padding: 5px 0;
+      }
+    }
+  }
 }
-
 .player__backward {
   div {
     margin: 0 15px;
   }
 }
-<<<<<<< HEAD
-
-.player__main {
-  flex-grow: 1;
-=======
 .player__main{
     flex-grow:1;
     .progress__bar, .progress{
-        height: 5px;    
+        height: 5px;
     }
->>>>>>> master
 }
 
 .player__forward {
@@ -54,25 +47,6 @@
     margin: 0 15px;
   }
 }
-<<<<<<< HEAD
-
-.progress {
-  background: orange;
-  width: 50%;
-  position: relative;
-}
-
-.progress__end {
-  position: absolute;
-  right: 0;
-}
-
-.progress__bar {
-  flex-grow: 1;
-  height: 1px;
-  background: #404040;
-}
-=======
 .progress, .progress__bar, .progress__container{
     padding: 0 !important;
 }
@@ -90,7 +64,7 @@
     position: relative;
     background: orange;
     width: 50%;
-    
+
     &:after{
         content: '';
         position: absolute;
@@ -102,4 +76,3 @@
         background: orange;
     }
 }
->>>>>>> master
