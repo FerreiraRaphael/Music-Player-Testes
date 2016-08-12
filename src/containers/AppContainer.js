@@ -9,7 +9,9 @@ class AppContainer extends React.Component {
     routerKey: PropTypes.number,
     store: PropTypes.object.isRequired
   }
-
+  componentDidMount(){
+    $.material.init()
+  }
   render () {
     const { history, routes, routerKey, store } = this.props
 

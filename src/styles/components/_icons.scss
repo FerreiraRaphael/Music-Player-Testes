@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'player';
+  src:    url('/src/static/fonts/player.eot?q972t9');
+  src:    url('/src/static/fonts/player.eot?q972t9#iefix') format('embedded-opentype'),
+  url('/src/static/fonts/player.ttf?q972t9') format('truetype'),
+  url('/src/static/fonts/player.woff?q972t9') format('woff'),
+  url('/src/static/fonts/player.svg?q972t9#player') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'player' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-list:before {
+  content: "\e900";
+}
+.icon-backward:before {
+  content: "\e901";
+}
+.icon-forward:before {
+  content: "\e902";
+}
+.icon-infinity:before {
+  content: "\e903";
+}
+.icon-pause:before {
+  content: "\e904";
+}
+.icon-play:before {
+  content: "\e905";
+}
+.icon-random:before {
+  content: "\e906";
+}
+.icon-volume:before {
+  content: "\e907";
+}
+.icon-volume-0:before {
+  content: "\e908";
+}
+.icon-volume-1:before {
+  content: "\e909";
+}
+.icon-volume_mute:before {
+  content: "\e90a";
+}

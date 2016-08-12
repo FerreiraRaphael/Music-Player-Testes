@@ -1,5 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Libre+Franklin:300,500);
 
+.visible{
+  -webkit-transform: scaleY(1);
+  -moz-transform: scaleY(1);
+  -ms-transform: scaleY(1);
+  -o-transform: scaleY(1);
+  transform: scaleY(1);
+}
+
 .player__container {
   width: 100%;
   position: fixed;
@@ -19,9 +27,16 @@
     display: -webkit-flex; /* Safari */
     display: flex;
       div {
-        margin: 10px 15px;
+        /*margin: 10px 15px;*/
       }
   }
+}
+.player__button{
+  width: 40px;
+  height: 40px;
+  padding: 10px 5px;
+  border-radius: 50%;
+  margin: 5px 1px;
 }
 .player__backward {
   /*div {
@@ -30,13 +45,10 @@
 }
 .player__main{
     flex-grow:1;
-    span{
-      margin: 20px;
-    }
     .progress__bar, .progress{
         height: 5px;
     }
-    .progress, .progress__bar, .progress__container{
+    .progress, .progress__container{
       padding: 0 !important;
       margin: 0 !important;
     }
@@ -54,42 +66,114 @@
 
 .progress__bar{
     width: 100%;
-    background: black;
+    background: rgba(0,0,0,0.25);
+    margin: 22px 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .progress{
-    position: relative;
-    background: orange;
-    width: 50%;
+  position: relative;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e65100+31,ffc107+100 */
+  background: #ffb347; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #ffb347 , #ffcc33); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #ffb347 , #ffcc33); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 50%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     &:after{
         content: '';
         position: absolute;
-        right: -2px;
+        right: -3px;
         top: -4px;
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
         border-radius: 10px;
-        background: orange;
+        background: #ffcc33;
     }
 }
 
-@font-face {
-    font-family: 'roadrage';
-    src:    url('static/fonts/roadrage.otf') format("opentype");
-    font-weight: normal;
-    font-style: normal;
-  }
-
 .player__timer{
   font-family: 'Libre Franklin', sans-serif !important;
-    // speak: none;
-    // font-style: normal;
-    // font-weight: normal;
-    // font-variant: normal;
-    // text-transform: none;
-    line-height: 1;
-    font-size: 20px;
-    /* Better Font Rendering =========== */
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  font-size: 12px;
+  margin: 20px 5px;
+}
+
+.player__volume{
+  position: relative;
+}
+.player__volume__progress__container{
+  position: absolute;
+  width: 30px;
+  height:100px;
+  left:5px;
+  top: -100px;
+  background: #eee;
+  -webkit-transform: scaleY(0);
+  -moz-transform: scaleY(0);
+  -ms-transform: scaleY(0);
+  -o-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transition: all 75ms ease-in-out;
+  -moz-transition: all 75ms ease-in-out;
+  -ms-transition: all 75ms ease-in-out;
+  -o-transition: all 75ms ease-in-out;
+  transition: all 75ms ease-in-out;
+  -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,.1);
+  -moz-box-shadow: 0px 2px 4px rgba(0,0,0,.1);
+  box-shadow: 0px 2px 4px rgba(0,0,0,.1);
+  &:before{
+    content: '';
+    background: #eee;
+    height: 10px;
+    width:10px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-box-shadow: -3px 3px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: -3px 3px 4px rgba(0,0,0,.1);
+    box-shadow: -3px 3px 4px rgba(0,0,0,.1);
+    position: absolute;
+    bottom: -5px;
+    left: 11px;
+  }
+}
+.player__volume__progress__box{
+  height:90%;
+  width: 100%;
+  margin: 5px 0;
+  position: absolute;
+  z-index:9999;
+}
+.player__volume__progress__bar{
+  height: 90%;
+  width: 3px;
+  background: rgba(0,0,0,.25);
+  position: absolute;
+  left: 14px;
+  border-radius: 10px;
+  top: 5px;
+}
+.player__volume__progress{
+  height: 100%;
+  width:3px;
+  background: orange;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  &:after{
+    content: '';
+    position: absolute;
+    left: -2.4px;
+    top: 0px;
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+    background: #fc3;
+  }
 }

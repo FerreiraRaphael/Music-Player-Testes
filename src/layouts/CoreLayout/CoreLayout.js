@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../../components/Header'
-import Player from '../../components/Player'
+import PlayerContainer from '../../routes/Player/containers/PlayerContainer'
 import classes from './CoreLayout.scss'
 import '../../styles/core.scss'
 
@@ -12,7 +12,7 @@ export const CoreLayout = ({ children }) => (
         {children}
       </div>
     </div>
-    <Player />
+    <PlayerContainer />
   </div>
 )
 

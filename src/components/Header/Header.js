@@ -5,6 +5,7 @@ import classes from './Header.scss'
 export const Header = () => (
   <div>
     <h1>React Redux Starter Kit</h1>
+    <a className="btn btn-primary">Primary</a>
     <IndexLink to='/' activeClassName={classes.activeRoute}>
       Home
     </IndexLink>

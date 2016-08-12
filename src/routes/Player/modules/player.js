@@ -7,6 +7,12 @@
 export const PLAY = 'PLAY'
 export const PAUSE = 'PAUSE'
 export const STOP = 'STOP'
+export const FORWARD = 'FORWARD'
+export const BACKWARD = 'BACKWARD'
+export const VOLUME_CHANGE = 'VOLUME_CHANGE'
+export const TOGGLE_RANDOM = 'TOGGLE_RANDOM'
+export const TOGGLE_REPEAT = 'TOGGLE_REPEAT'
+
 
 // ------------------------------------
 // Actions
