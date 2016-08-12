@@ -68,13 +68,16 @@ class PlayerContainer extends React.Component{
   }
   showVolume(){ this.setState({ showVolume : true }) }
   hideVolume(){ this.setState({ showVolume : false }) }
-
+  collapse(){
+    $(`.${classes.player__menu}`).toggleClass(classes.active)
+  }
   render(){
     return <Player
       onMouseDownHandler_Music={this.onMouseDownHandler_Music.bind(this)}
       onMouseUpHandler_Music={this.onMouseUpHandler_Music.bind(this)}
       onMouseDownHandler_Volume={this.onMouseDownHandler_Volume.bind(this)}
       onMouseUpHandler_Volume={this.onMouseUpHandler_Volume.bind(this)}
+      collapse={this.collapse}
     />
   }
 }
