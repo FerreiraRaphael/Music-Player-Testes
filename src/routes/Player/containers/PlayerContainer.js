@@ -18,66 +18,76 @@ class PlayerContainer extends React.Component{
     super(props)
     this.state = {showVolume : false}
   }
+
   componentDidMount(){
-    console.log('mount')
     SC.initialize({
       client_id: 'f355cf56384ddd44228e0529403558dd',
       redirect_uri: 'http://localhost:3000'
     });
-    SC.get('/user/183/tracks').then(function(tracks){
-      alert('Latest track: ' + tracks[0].title);
-    });
   }
-  percentHandler(percent){
-    return ((percent.toString().slice(0, 4) * 100) >= 99 ? 100 : percent.toString().slice(0, 4) * 100) + '%'
-  }
+
+  percentHandler(percent){ return ((percent.toString().slice(0, 4) * 100) >= 99 ? 100 : percent.toString().slice(0, 4) * 100) + 0.005 + '%' }
+
   onMouseDownHandler_Music(e){
-    let progress__container = document.querySelector(`.${classes.progress__container}`),
-      progress__bar = progress__container.querySelector(`.${classes.progress__bar}`),
-      progress = progress__container.querySelector(`.${classes.progress}`),
-      percent = e.nativeEvent.offsetX / progress__bar.clientWidth
+    let body = $('body'),
+      progress__bar = $(`.${classes.progress__bar}`),
+      progress = $(`.${classes.progress}`),
+      percent = this.percentHandler(e.nativeEvent.offsetX / progress__bar.width())
 
-    progress.style.width = this.percentHandler(percent)
-    progress__container.onmousemove = (e) => {
-      percent = e.offsetX / progress__bar.clientWidth
-      progress.style.width = this.percentHandler(percent)
-    }
+    progress.width(percent)
+    body.on('mousemove', e => {
+      body.toggleClass(classes.noselect,true)
+      percent = this.percentHandler(e.clientX / progress__bar.width())
+      progress.width(percent)
+    })
+    body.on('mouseup', e => {
+      body.off('mousemove')
+      body.toggleClass(classes.noselect,false)
+     })
   }
-  onMouseUpHandler_Music(e){
-    let progress__container = document.querySelector(`.${classes.progress__container}`)
 
-    progress__container.onmousemove = e => {}
+  onMouseOverHandler(e){
+    let percent = this.percentHandler((e.nativeEvent.offsetX / $(`.${classes.progress__bar}`).width())),
+      progress__mouse = $(`.${classes.progress__mouse}`)
+      // progress__mouse.css('background-color', 'black')
+      progress__mouse.width(percent)
+      $(`.${classes.progress__container}`).on('mousemove', e => {
+        percent = this.percentHandler(e.offsetX / $(`.${classes.progress__bar}`).width())
+        progress__mouse.width(percent)
+      })
   }
-  onMouseDownHandler_Volume(e){
-    let progress__container = document.querySelector(`.${classes.player__volume__progress__box}`),
-      progress__bar = document.querySelector(`.${classes.player__volume__progress__bar}`),
-      progress = progress__bar.querySelector(`.${classes.player__volume__progress}`),
-      percent = ( progress__bar.clientHeight - e.nativeEvent.offsetY )/ progress__bar.clientHeight
 
-    progress.style.height = this.percentHandler(percent)
-    progress__container.onmousemove = (e) => {
-      console.log(progress__bar.clientHeight - e.offsetY, progress__bar.clientHeight)
-      percent = (progress__bar.clientHeight - e.offsetY) / progress__bar.clientHeight
-      progress.style.height = this.percentHandler(percent)
-    }
-  }
-  onMouseUpHandler_Volume(e){
-    let progress__container = document.querySelector(`.${classes.player__volume__progress__box}`)
+  onMouseOutHandler(e){ $(`.${classes.progress__mouse}`).width(0) }
 
-    progress__container.onmousemove = e => {}
-  }
-  showVolume(){ this.setState({ showVolume : true }) }
-  hideVolume(){ this.setState({ showVolume : false }) }
-  collapse(){
-    $(`.${classes.player__menu}`).toggleClass(classes.active)
-  }
+  // showVolume(){ this.setState({ showVolume : true }) }
+  //
+  // hideVolume(){ this.setState({ showVolume : false }) }
+  //
+  // onMouseDownHandler_Volume(e){
+  //   let progress__container = document.querySelector(`.${classes.player__volume__progress__box}`),
+  //     progress__bar = document.querySelector(`.${classes.player__volume__progress__bar}`),
+  //     progress = progress__bar.querySelector(`.${classes.player__volume__progress}`),
+  //     percent = ( progress__bar.clientHeight - e.nativeEvent.offsetY )/ progress__bar.clientHeight
+  //
+  //   progress.style.height = this.percentHandler(percent)
+  //   progress__container.onmousemove = (e) => {
+  //     console.log(progress__bar.clientHeight - e.offsetY, progress__bar.clientHeight)
+  //     percent = (progress__bar.clientHeight - e.offsetY) / progress__bar.clientHeight
+  //     progress.style.height = this.percentHandler(percent)
+  //   }
+  // }
+  // onMouseUpHandler_Volume(e){
+  //   let progress__container = document.querySelector(`.${classes.player__volume__progress__box}`)
+  //
+  //   progress__container.onmousemove = e => {}
+  // }
+  // collapse(){ $(`.${classes.player__menu}`).toggleClass(classes.active) }
+
   render(){
     return <Player
-      onMouseDownHandler_Music={this.onMouseDownHandler_Music.bind(this)}
-      onMouseUpHandler_Music={this.onMouseUpHandler_Music.bind(this)}
-      onMouseDownHandler_Volume={this.onMouseDownHandler_Volume.bind(this)}
-      onMouseUpHandler_Volume={this.onMouseUpHandler_Volume.bind(this)}
-      collapse={this.collapse}
+      onMouseDownHandler_Music={::this.onMouseDownHandler_Music}
+      onMouseOverHandler={::this.onMouseOverHandler}
+      onMouseOutHandler={this.onMouseOutHandler}
     />
   }
 }

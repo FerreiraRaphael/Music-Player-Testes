@@ -1,5 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Libre+Franklin:300,500);
-
+$progress__bar__color: #ccc;
+$progress__first__color: #ffb347;
+$progress__second__color: #ffcc33;
+.gradient{
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e65100+31,ffc107+100 */
+  background: $progress__first__color; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, $progress__first__color , $progress__second__color); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, $progress__first__color , $progress__second__color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.nogradient{
+  background: rgb(255, 233, 168);
+}
 .visible{
   -webkit-transform: scaleY(1);
   -moz-transform: scaleY(1);
@@ -7,7 +18,14 @@
   -o-transform: scaleY(1);
   transform: scaleY(1);
 }
-
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently not supported by any browser */
+}
 .player__container {
   width: 100%;
   position: fixed;
@@ -60,12 +78,12 @@
 
 .progress__container{
     position: absolute;
-    right: 5px;
+    right: 0;
     top: -5px;
-    width: 99.0%;
+    width: 100%;
     height: 15px;
     cursor:pointer;
-    .progress__bar, .progress{
+    .progress__bar, .progress, .progress__mouse{
         height: 3px;
     }
     .progress, .progress__container{
@@ -76,7 +94,7 @@
 
 .progress__bar{
     width: 100%;
-    background: rgba(0,0,0,0.25);
+    background: $progress__bar__color;
     margin: 5px 0;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -86,23 +104,26 @@
 .progress{
   position: relative;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e65100+31,ffc107+100 */
-  background: #ffb347; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #ffb347 , #ffcc33); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #ffb347 , #ffcc33); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  width: 50%;
+  min-width: 0.5%;
+  width: 0;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     &:after{
         content: '';
         position: absolute;
-        right: -3px;
-        top: -4px;
-        width: 12px;
-        height: 12px;
+        right: 0;
+        top: -3.55px;
+        width: 10px;
+        height: 10px;
         border-radius: 10px;
-        background: #ffcc33;
+        background: $progress__second__color;
     }
+}
+
+.progress__mouse{
+  position: absolute;
+  z-index: 0;
 }
 
 .player__volume{

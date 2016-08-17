@@ -6,8 +6,8 @@ import icones from './icones.scss'
 // Player component
 const Player = props => {
   "use strict";
-  const { icons, player, player__backward, player__forward, player__container,
-    progress, progress__bar, progress__container, player__button, player__volume,
+  const { nogradient, gradient,icons, player, player__backward, player__forward, player__container,
+    progress, progress__mouse, progress__bar, progress__container, player__button, player__volume,
     player__volume__progress__container, player__volume__progress__bar, player__volume__progress,
     player__volume__progress__box, player__collapse, player__menu } = classes
 
@@ -17,9 +17,10 @@ const Player = props => {
 
     </div>*/}
     <ul className={player}>
-      <div className={progress__container} onMouseUp={props.onMouseUpHandler_Music}>
-        <div className={progress__bar} onMouseDown={props.onMouseDownHandler_Music} onMouseUp={props.onMouseUpHandler_Music}>
-          <div className={progress}></div>
+      <div className={progress__container} onMouseDown={props.onMouseDownHandler_Music} onMouseOver={props.onMouseOverHandler} onMouseOut={props.onMouseOutHandler}>
+        <div className={progress__bar}>
+          <div className={`${progress__mouse} ${nogradient}`}></div>
+          <div className={`${progress} ${gradient}`}></div>
         </div>
       </div>
       <li className={player__backward}>
@@ -43,7 +44,8 @@ const Player = props => {
               <div className={`${player__volume__progress}`}></div>
             </div>
           </div>
-          <i className={`${icones.icon_volume} ${icons}`}/></div>
+          <i className={`${icones.icon_volume} ${icons}`}/>
+        </div>
         <div className={`btn ${player__button}`} onClick={props.random}><i className={`${icones.icon_random} ${icons}`}/></div>
         <div className={`btn ${player__button}`} onClick={props.random}><i className={`${icones.icon_infinity} ${icons}`}/></div>
         <div className={`btn ${player__button}`} onClick={props.random}><i className={`${icones.icon_list} ${icons}`}/></div>
@@ -52,5 +54,6 @@ const Player = props => {
   </div>
   )
 }
+
 
 export default Player
