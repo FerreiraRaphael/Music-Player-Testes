@@ -6,7 +6,7 @@ import icones from './icones.scss'
 // Player component
 const Player = props => {
   "use strict";
-  const { nogradient, gradient,icons, player, player__backward, player__forward, player__container,
+  const { nogradient, gradient, icons, music__cover, music__info, player, player__backward, player__forward, player__container,
     progress, progress__mouse, progress__bar, progress__container, player__button, player__volume,
     player__volume__progress__container, player__volume__progress__bar, player__volume__progress,
     player__volume__progress__box, player__collapse, player__menu } = classes
@@ -24,8 +24,11 @@ const Player = props => {
         </div>
       </div>
       <li className={player__backward}>
-        <div></div><span>Nome Artista - Nome Musica</span>
-        <span>0:00&nbsp;&nbsp;/&nbsp;&nbsp;5:00</span>
+        <div className={music__cover}></div>
+        <div className={music__info}>
+          <span>Nome Artista - Nome Musica</span>
+          <span>0:00</span> <span>&nbsp;&nbsp;/&nbsp;&nbsp;5:00</span>
+        </div>
       </li>
       <li className={player__forward}>
         <div className={`btn ${player__button}`} onClick={props.backward}><i className={`${icones.icon_backward} ${icons}`}/></div>

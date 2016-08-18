@@ -28,14 +28,30 @@ class PlayerContainer extends React.Component{
 
   percentHandler(percent){ return ((percent.toString().slice(0, 4) * 100) >= 99 ? 100 : percent.toString().slice(0, 4) * 100) + 0.005 + '%' }
 
+  colorProgressBarHandler(toggle){
+    let progress__mouse = $(`.${classes.progress__mouse}`),
+      progress = $(`.${classes.progress}`),
+      zindex = toggle ? 1 : 0
+
+    progress__mouse.toggleClass(classes.gradient, toggle)
+    progress__mouse.toggleClass(classes.nogradient, !toggle)
+    progress__mouse.css('z-index', zindex)
+
+    progress.toggleClass(classes.gradient, !toggle)
+    progress.toggleClass(classes.nogradient, toggle)
+  }
+
   onMouseDownHandler_Music(e){
     let body = $('body'),
       progress__bar = $(`.${classes.progress__bar}`),
       progress = $(`.${classes.progress}`),
+      progress__container = $(`.${classes.progress__container}`),
       percent = this.percentHandler(e.nativeEvent.offsetX / progress__bar.width())
 
     progress.width(percent)
+    this.setState({ progressBarMove: true })
     body.on('mousemove', e => {
+      this.colorProgressBarHandler(false)
       body.toggleClass(classes.noselect,true)
       percent = this.percentHandler(e.clientX / progress__bar.width())
       progress.width(percent)
@@ -43,21 +59,33 @@ class PlayerContainer extends React.Component{
     body.on('mouseup', e => {
       body.off('mousemove')
       body.toggleClass(classes.noselect,false)
+      this.setState({ progressBarMove: false })
      })
   }
 
   onMouseOverHandler(e){
+    if(this.state.progressBarMove){
+      $(`.${classes.progress__container}`).off('mousemove')
+      $(`.${classes.progress__mouse}`).width(0)
+      this.colorProgressBarHandler(false)
+      return
+    }
     let percent = this.percentHandler((e.nativeEvent.offsetX / $(`.${classes.progress__bar}`).width())),
-      progress__mouse = $(`.${classes.progress__mouse}`)
-      // progress__mouse.css('background-color', 'black')
+      progress__mouse = $(`.${classes.progress__mouse}`),
+      progress = $(`.${classes.progress}`)
       progress__mouse.width(percent)
+      this.colorProgressBarHandler(progress.width() > e.nativeEvent.offsetX)
       $(`.${classes.progress__container}`).on('mousemove', e => {
         percent = this.percentHandler(e.offsetX / $(`.${classes.progress__bar}`).width())
         progress__mouse.width(percent)
+        this.colorProgressBarHandler(progress.width() > e.offsetX)
       })
   }
 
-  onMouseOutHandler(e){ $(`.${classes.progress__mouse}`).width(0) }
+  onMouseOutHandler(e){
+    $(`.${classes.progress__mouse}`).width(0)
+    this.colorProgressBarHandler(false)
+  }
 
   // showVolume(){ this.setState({ showVolume : true }) }
   //
@@ -87,7 +115,7 @@ class PlayerContainer extends React.Component{
     return <Player
       onMouseDownHandler_Music={::this.onMouseDownHandler_Music}
       onMouseOverHandler={::this.onMouseOverHandler}
-      onMouseOutHandler={this.onMouseOutHandler}
+      onMouseOutHandler={::this.onMouseOutHandler}
     />
   }
 }

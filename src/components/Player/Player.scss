@@ -9,7 +9,10 @@ $progress__second__color: #ffcc33;
   background: linear-gradient(to left, $progress__first__color , $progress__second__color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .nogradient{
-  background: rgb(255, 233, 168);
+  // background: rgb(255, 233, 168);
+  background: #EDE574; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #EDE574 , #E1F5C4); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #EDE574 , #E1F5C4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .visible{
   -webkit-transform: scaleY(1);
@@ -25,6 +28,24 @@ $progress__second__color: #ffcc33;
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently not supported by any browser */
+}
+.music__cover{
+  width: 30px;
+  height: 30px;
+  opacity: 1;
+  background-image: url("https://i1.sndcdn.com/artworks-000173429243-bqrkwi-t50x50.jpg");
+  box-shadow: rgba(0,0,0,.1)0 0 0 1px inset;
+  background-size: cover;
+  background-position: 50% 50%;
+  display: inline-block;
+}
+.music__info{
+  span{
+    font-family: 'Libre Franklin', sans-serif !important;
+    line-height: 1;
+    font-size: 12px;
+    margin: 25px 5px;
+  }
 }
 .player__container {
   width: 100%;
@@ -58,12 +79,6 @@ $progress__second__color: #ffcc33;
 .player__backward {
   flex-grow: 1;
   justify-content: flex-start;
-  span{
-    font-family: 'Libre Franklin', sans-serif !important;
-    line-height: 1;
-    font-size: 12px;
-    margin: 25px 5px;
-  }
   /*div {
     margin: 0 15px;
   }*/
@@ -106,9 +121,9 @@ $progress__second__color: #ffcc33;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e65100+31,ffc107+100 */
   min-width: 0.5%;
   width: 0;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: all 0.05s ease-out;
+  transition: all 0.05s ease-out;
     &:after{
         content: '';
         position: absolute;
@@ -124,6 +139,9 @@ $progress__second__color: #ffcc33;
 .progress__mouse{
   position: absolute;
   z-index: 0;
+  border-radius: 5px;
+  -webkit-transition: all 0.05s ease-out;
+  transition: all 0.05s ease-out;
 }
 
 .player__volume{
