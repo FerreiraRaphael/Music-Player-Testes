@@ -38,14 +38,24 @@ $progress__second__color: #ffcc33;
   background-size: cover;
   background-position: 50% 50%;
   display: inline-block;
+  margin: 15px 10px;
 }
-.music__info{
+.music__info__container{
+  padding: 18px 0;
   span{
     font-family: 'Libre Franklin', sans-serif !important;
     line-height: 1;
     font-size: 12px;
-    margin: 25px 5px;
   }
+}
+.music__info{
+  display: block;
+}
+.music__current__time{
+  color: darken($progress__first__color, 10%);
+}
+.music__duration{
+
 }
 .player__container {
   width: 100%;
@@ -75,6 +85,12 @@ $progress__second__color: #ffcc33;
   padding: 10px 5px;
   border-radius: 50%;
   margin: 12px 1px;
+  background-color: transparent !important;
+  -webkit-transition: color 0.3s ease-out;
+  transition: color 0.3s ease-out;
+  &:hover{
+      color: $progress__first__color;
+  }
 }
 .player__backward {
   flex-grow: 1;
