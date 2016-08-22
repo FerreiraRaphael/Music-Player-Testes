@@ -82,6 +82,10 @@ class PlayerContainer extends React.Component{
       })
   }
 
+  toggleMenu(e){
+    $(`.${classes.player__menu}`).toggleClass(classes.active)
+  }
+
   onMouseOutHandler(e){
     $(`.${classes.progress__mouse}`).width(0)
     this.colorProgressBarHandler(false)
@@ -116,6 +120,7 @@ class PlayerContainer extends React.Component{
       onMouseDownHandler_Music={::this.onMouseDownHandler_Music}
       onMouseOverHandler={::this.onMouseOverHandler}
       onMouseOutHandler={::this.onMouseOutHandler}
+      toggleMenu={this.toggleMenu}
     />
   }
 }

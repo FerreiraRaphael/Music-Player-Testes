@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'player';
-    src:    url('static/fonts/player/player.eot?4acswa');
-    src:    url('static/fonts/player/player.eot?4acswa#iefix') format('embedded-opentype'),
-      url('static/fonts/player/player.ttf?4acswa') format('truetype'),
-      url('static/fonts/player/player.woff?4acswa') format('woff'),
-      url('static/fonts/player/player.svg?4acswa#player') format('svg');
+    src:    url('static/fonts/player/player.eot?so8a3j');
+    src:    url('static/fonts/player/player.eot?so8a3j#iefix') format('embedded-opentype'),
+      url('static/fonts/player/player.ttf?so8a3j') format('truetype'),
+      url('static/fonts/player/player.woff?so8a3j') format('woff'),
+      url('static/fonts/player/player.svg?so8a3j#player') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,36 +24,48 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon_list:before {
-  content: "\e900";
+.icon_facebook:before {
+content: "\e90b";
 }
-.icon_backward:before {
-  content: "\e901";
+.icon_soundcloud:before {
+content: "\e90c";
 }
-.icon_forward:before {
-  content: "\e902";
+.icon_twitter:before {
+content: "\e90d";
 }
-.icon_infinity:before {
-  content: "\e903";
-}
-.icon_pause:before {
-  content: "\e904";
-}
-.icon_play:before {
-  content: "\e905";
-}
-.icon_random:before {
-  content: "\e906";
+.icon_download:before {
+content: "\e90e";
 }
 .icon_volume:before {
-  content: "\e907";
+content: "\e90a";
 }
-.icon_volume_0:before {
-  content: "\e908";
-}
-.icon_volume_1:before {
-  content: "\e909";
+.icon_list:before {
+content: "\e900";
 }
 .icon_volume_mute:before {
-  content: "\e90a";
+content: "\e901";
+}
+.icon_volume_0:before {
+content: "\e902";
+}
+.icon_volume_1:before {
+content: "\e903";
+}
+.icon_backward:before {
+content: "\e904";
+}
+.icon_forward:before {
+content: "\e905";
+}
+.icon_infinity:before {
+content: "\e906";
+}
+.icon_pause:before {
+content: "\e907";
+}
+.icon_play:before {
+content: "\e908";
+}
+.icon_random:before {
+content: "\e909";
 }

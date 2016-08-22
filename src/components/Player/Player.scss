@@ -30,6 +30,8 @@ $progress__second__color: #ffcc33;
   user-select: none;           /* Non-prefixed version, currently not supported by any browser */
 }
 .music__cover{
+  min-width: 30px;
+  min-height: 30px;
   width: 30px;
   height: 30px;
   opacity: 1;
@@ -41,12 +43,17 @@ $progress__second__color: #ffcc33;
   margin: 15px 10px;
 }
 .music__info__container{
-  padding: 18px 0;
+  padding: 18px 5px;
+  max-width: 100%;
   span{
     font-family: 'Libre Franklin', sans-serif !important;
     line-height: 1;
     font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
+
 }
 .music__info{
   display: block;
@@ -57,9 +64,28 @@ $progress__second__color: #ffcc33;
 .music__duration{
 
 }
+.player__menu{
+  width: 225px;
+  height: 60px;
+  margin-right: -240px;
+  position: absolute;
+  right: 5px;
+  top: -60px;
+  -webkit-transition: margin 0.3s ease-out;
+  transition: margin 0.3s ease-in-out;
+  &.active{
+    margin-right: 0;
+  }
+  .player__button{
+    background-color: rgba(0, 0, 0, 0.15) !important;
+  }
+}
 .player__container {
   width: 100%;
   position: fixed;
+  height: 55px;
+  background: white;
+  z-index: 1;
   bottom: 0;
   -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.52);
   -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.52);
@@ -70,7 +96,6 @@ $progress__second__color: #ffcc33;
   width: 100%;
   margin: 0;
   padding: 0;
-  height: 55px;
   li {
     display: -webkit-flex; /* Safari */
     display: flex;
@@ -92,9 +117,31 @@ $progress__second__color: #ffcc33;
       color: $progress__first__color;
   }
 }
+.button__forward{
+  @media only screen and (max-width: 315px){
+    display: none;
+  }
+}
+.player__play__pause{
+  margin: 9px 1px;
+  font-size: 24px !important;
+}
 .player__backward {
   flex-grow: 1;
   justify-content: flex-start;
+  max-width: 60%;
+  @media only screen and (max-width: 1200px){
+    max-width: 50%;
+  }
+  @media only screen and (max-width: 992px){
+    max-width: 43%;
+  }
+  @media only screen and (max-width: 767px){
+    max-width: 60%;
+  }
+  @media only screen and (max-width: 480px){
+    max-width: 40%;
+  }
   /*div {
     margin: 0 15px;
   }*/
@@ -233,17 +280,5 @@ $progress__second__color: #ffcc33;
     height: 8px;
     border-radius: 10px;
     background: #fc3;
-  }
-}
-
-.player__collapse{
-
-}
-
-.player__menu{
-  min-height: 300px;
-  transition: min-height .1s ease-in-out;
-  &.active{
-    min-height: 0px;
   }
 }
