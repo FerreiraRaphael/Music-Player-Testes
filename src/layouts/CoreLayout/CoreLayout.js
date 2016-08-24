@@ -4,9 +4,10 @@ import PlayerContainer from '../../routes/Player/containers/PlayerContainer'
 import PlayerListContainer from '../../containers/Player/PlayerListContainer'
 import classes from './CoreLayout.scss'
 import '../../styles/core.scss'
-import 'materialize-css/sass/materialize.scss';
-import 'jquery'
-import 'materialize-css'
+import 'materialize-css/sass/materialize.scss'
+import 'materialize-css/dist/js/materialize.js'
+import './materialize.js'
+
 
 export const CoreLayout = ({ children }) => (
   <div>
