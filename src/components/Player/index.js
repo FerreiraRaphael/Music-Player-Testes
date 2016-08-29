@@ -1,15 +1,31 @@
 // Import React
 import React from 'react';
+import classNames from 'classnames'
 import classes from './Player.scss'
 import icones from './icones.scss'
 
 // Player component
 const Player = props => {
   "use strict";
-
+  const Progress__classes = classNames({
+      [classes.nogradient]: props.progressBar.mouseOver,
+      [classes.gradient]: !props.progressBar.mouseOver
+  })
+  const Progress__styles = {
+    width: props.progressBar.width
+  }
+  const Progress__Mouse__classes = classNames({
+      [classes.nogradient]: !props.progressBar.mouseOver,
+      [classes.gradient]: props.progressBar.mouseOver
+  })
+  const Progress__Mouse__style = {
+    zIndex: (!props.progressBar.mouseDown && props.progressBar.mouseOver ) ? 1 : 0,
+    width: props.progressBar.mouseDown ? 0 : props.progressBar.width__mouse
+  }
+  const Player__Menu__classes = classNames({ [classes.active]: props.menu })
   return (
   <div className={classes.player__container}>
-    <div className={`${classes.player__menu}`}>
+    <div className={`${classes.player__menu} ${Player__Menu__classes}`}>
       <div className={`btn ${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_facebook} `}/></div>
       <div className={`btn ${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
       <div className={`btn ${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
@@ -19,10 +35,11 @@ const Player = props => {
     </div>
     <ul className={classes.player}>
       <div className={classes.progress__container} onMouseDown={props.onMouseDownHandler_Music}
-        onMouseOver={props.onMouseOverHandler} onMouseOut={props.onMouseOutHandler}>
+        onMouseOver={props.onMouseOverHandler} onMouseOut={props.onMouseOutHandler}
+        onMouseMove={props.onMouseMoveHandler}>
         <div className={classes.progress__bar}>
-          <div className={`${classes.progress__mouse} ${classes.nogradient}`}></div>
-          <div className={`${classes.progress} ${classes.gradient}`}></div>
+          <div style={Progress__Mouse__style} className={`${classes.progress__mouse} ${Progress__Mouse__classes}`}></div>
+          <div style={Progress__styles} className={`${classes.progress} ${Progress__classes}`}></div>
         </div>
       </div>
       <li className={classes.player__backward}>

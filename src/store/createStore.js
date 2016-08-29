@@ -1,7 +1,8 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
-import makeRootReducer from './reducers'
+import { makeRootReducer , injectReducer} from './reducers'
+import {playerReducer as reducer} from '../containers/PlayerContainer/modules'
 
 export default (initialState = {}, history) => {
   // ======================================================
@@ -39,6 +40,6 @@ export default (initialState = {}, history) => {
       store.replaceReducer(reducers)
     })
   }
-
+  injectReducer(store, { key: 'player', reducer })
   return store
 }

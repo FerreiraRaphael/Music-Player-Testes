@@ -18,9 +18,17 @@ class PlayerContainer extends React.Component{
   // ------------------------------------
   // Life Circle Functions
   // ------------------------------------
-  constructor(props){
+  constructor(props,{dispatch}){
     super(props)
-    this.state = {showVolume : false}
+    this.state = {
+      progressBar: {
+        mouseOver: false,
+        mouseDown: false,
+        width: '0px',
+        width__mouse: '0px'
+      },
+      menu: false
+    }
   }
 
   componentDidMount(){
@@ -34,73 +42,42 @@ class PlayerContainer extends React.Component{
   // Helper Functions
   // ------------------------------------
 
-  percentHandler(percent){ return ((percent.toString().slice(0, 4) * 100) >= 99 ? 100 : percent.toString().slice(0, 4) * 100) + 0.005 + '%' }
+  updateObjectState(key, props){ this.setState({[key] : Object.assign({}, this.state[key], props)}) }
 
-  colorProgressBarHandler(toggle){
-    let progress__mouse = $(`.${classes.progress__mouse}`),
-      progress = $(`.${classes.progress}`),
-      zindex = toggle ? 1 : 0
-
-    progress__mouse.toggleClass(classes.gradient, toggle)
-    progress__mouse.toggleClass(classes.nogradient, !toggle)
-    progress__mouse.css('z-index', zindex)
-
-    progress.toggleClass(classes.gradient, !toggle)
-    progress.toggleClass(classes.nogradient, toggle)
-  }
+  colorProgressBarHandler(width){
+    let logic = Number(width.replace('px', '')) < Number(this.state.progressBar.width.replace('px',''))
+    this.updateObjectState('progressBar',{ width__mouse: width, mouseOver: logic}) }
 
   // ------------------------------------
   // Event functions
   // ------------------------------------
 
   onMouseDownHandler_Music(e){
-    let body = $('body'),
-      progress__bar = $(`.${classes.progress__bar}`),
-      progress = $(`.${classes.progress}`),
-      progress__container = $(`.${classes.progress__container}`),
-      percent = this.percentHandler(e.nativeEvent.offsetX / progress__bar.width())
-
-    progress.width(percent)
-    this.setState({ progressBarMove: true })
-    body.on('mousemove', e => {
-      this.colorProgressBarHandler(false)
-      body.toggleClass(classes.noselect,true)
-      percent = this.percentHandler(e.clientX / progress__bar.width())
-      progress.width(percent)
-    })
-    body.on('mouseup', e => {
-      body.off('mousemove')
-      body.toggleClass(classes.noselect,false)
-      this.setState({ progressBarMove: false })
+    const body = document.querySelector('body')
+    this.updateObjectState('progressBar', {mouseOver: false, mouseDown: true, width: `${e.nativeEvent.clientX}px`})
+    body.classList.toggle(classes.noselect,true)
+    let bodyMouseMove = e => this.updateObjectState('progressBar',{width: `${e.clientX}px`})
+    body.addEventListener('mousemove', bodyMouseMove)
+    body.addEventListener('mouseup', e => {
+      body.removeEventListener('mousemove', bodyMouseMove)
+      body.classList.toggle(classes.noselect,false)
+      this.updateObjectState('progressBar', {mouseDown: false})
      })
   }
 
   onMouseOverHandler(e){
-    if(this.state.progressBarMove){
-      $(`.${classes.progress__container}`).off('mousemove')
-      $(`.${classes.progress__mouse}`).width(0)
-      this.colorProgressBarHandler(false)
-      return
-    }
-    let percent = this.percentHandler((e.nativeEvent.offsetX / $(`.${classes.progress__bar}`).width())),
-      progress__mouse = $(`.${classes.progress__mouse}`),
-      progress = $(`.${classes.progress}`)
-      progress__mouse.width(percent)
-      this.colorProgressBarHandler(progress.width() > e.nativeEvent.offsetX)
-      $(`.${classes.progress__container}`).on('mousemove', e => {
-        percent = this.percentHandler(e.offsetX / $(`.${classes.progress__bar}`).width())
-        progress__mouse.width(percent)
-        this.colorProgressBarHandler(progress.width() > e.offsetX)
-      })
+    if(this.state.progressBar.mouseDown) return
+    this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`)
+  }
+  onMouseMoveHandler(e){
+    if(this.state.progressBar.mouseDown) return
+    this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`)
   }
 
-  toggleMenu(e){
-    $(`.${classes.player__menu}`).toggleClass(classes.active)
-  }
+  toggleMenu(e){ this.setState({menu: !this.state.menu}) }
 
   onMouseOutHandler(e){
-    $(`.${classes.progress__mouse}`).width(0)
-    this.colorProgressBarHandler(false)
+    this.updateObjectState('progressBar',{ mouseOver: false, width__mouse: 0})
   }
 
   // showVolume(){ this.setState({ showVolume : true }) }
@@ -132,7 +109,10 @@ class PlayerContainer extends React.Component{
       onMouseDownHandler_Music={::this.onMouseDownHandler_Music}
       onMouseOverHandler={::this.onMouseOverHandler}
       onMouseOutHandler={::this.onMouseOutHandler}
-      toggleMenu={this.toggleMenu}
+      onMouseMoveHandler={::this.onMouseMoveHandler}
+      toggleMenu={::this.toggleMenu}
+      progressBar={this.state.progressBar}
+      menu={this.state.menu}
     />
   }
 }
@@ -147,9 +127,11 @@ const mapActionCreators = {
     stop
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
     MUSIC_STATUS: state.MUSIC_STATUS
-})
+}}
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
