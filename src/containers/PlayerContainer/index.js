@@ -19,7 +19,6 @@ class PlayerContainer extends React.Component{
   // Life Circle Functions
   // ------------------------------------
   constructor(props,dispatch){
-    console.log(props)
     super(props)
     this.state = {
       progressBar: {
@@ -114,6 +113,9 @@ class PlayerContainer extends React.Component{
       toggleMenu={::this.toggleMenu}
       progressBar={this.state.progressBar}
       menu={this.state.menu}
+      play={this.props.play}
+      pause={this.props.pause}
+      MUSIC_STATUS={this.props.MUSIC_STATUS}
     />
   }
 }

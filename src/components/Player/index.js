@@ -23,6 +23,11 @@ const Player = props => {
     width: props.progressBar.mouseDown ? 0 : props.progressBar.width__mouse
   }
   const Player__Menu__classes = classNames({ [classes.active]: props.menu })
+  const Player__play__pause = classNames({
+    [icones.icon_play]: props.MUSIC_STATUS !== 'PLAYING',
+    [icones.icon_pause]: props.MUSIC_STATUS === 'PLAYING'
+  })
+  const togglePlay = ()=>{ props.MUSIC_STATUS === 'PLAYING' ? props.pause() : props.play()}
   return (
   <div className={classes.player__container}>
     <div className={`${classes.player__menu} ${Player__Menu__classes}`}>
@@ -55,7 +60,7 @@ const Player = props => {
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_backward} `}/></div>
-        <div style={ {padding: "6px 5px"} } className={`btn ${classes.player__button}`} onClick={props.togglePlay}><i className={`${icones.icon_play} ${classes.player__play__pause} `}/></div>
+        <div style={ {padding: "6px 5px"} } className={`btn ${classes.player__button}`} onClick={togglePlay}><i className={`${Player__play__pause} ${classes.player__play__pause} `}/></div>
         <div className={`btn ${classes.player__button} ${classes.button__forward}`} onClick={props.forward}><i className={`${icones.icon_forward} `}/></div>
         {/*<div className={`btn ${player__collapse}`} onClick={props.collapse}>collapse</div>*/}
         <div className={`btn ${classes.player__button} hidden-xs ${classes.player__volume}`} onClick={props.random}
