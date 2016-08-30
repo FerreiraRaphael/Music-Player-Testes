@@ -18,7 +18,8 @@ class PlayerContainer extends React.Component{
   // ------------------------------------
   // Life Circle Functions
   // ------------------------------------
-  constructor(props,{dispatch}){
+  constructor(props,dispatch){
+    console.log(props)
     super(props)
     this.state = {
       progressBar: {
@@ -127,11 +128,9 @@ const mapActionCreators = {
     stop
 }
 
-const mapStateToProps = (state) => {
-    console.log(state)
-    return {
-    MUSIC_STATUS: state.MUSIC_STATUS
-}}
+const mapStateToProps = (state) => ({
+    MUSIC_STATUS: state.player.MUSIC_STATUS
+})
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
