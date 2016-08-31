@@ -15,7 +15,9 @@
     "__PROD__"     : false,
     "__DEBUG__"    : false,
     "__COVERAGE__" : false,
-    "__BASENAME__" : false
+    "__BASENAME__" : false,
+    "__SC_CLIENT_ID__" : false,
+    "__SC_REDIRECT_URI__" : false
   },
   "rules": {
     "semi" : [2, "never"],

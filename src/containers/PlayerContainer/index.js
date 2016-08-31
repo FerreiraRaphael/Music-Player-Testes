@@ -33,8 +33,8 @@ class PlayerContainer extends React.Component{
 
   componentDidMount(){
     SC.initialize({
-      client_id: 'f355cf56384ddd44228e0529403558dd',
-      redirect_uri: 'http://localhost:3000'
+      client_id: __SC_CLIENT_ID__,
+      redirect_uri: __SC_REDIRECT_URI__
     });
   }
 

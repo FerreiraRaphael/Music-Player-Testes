@@ -84,7 +84,10 @@ config.globals = {
   '__TEST__'     : config.env === 'test',
   '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
   '__COVERAGE__' : !argv.watch && config.env === 'test',
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
+  '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
+  //SOUND CLOUD CONFIG's
+  '__SC_CLIENT_ID__' : JSON.stringify(process.env.SC_CLIENT_ID || ''),
+  '__SC_REDIRECT_URI__' : JSON.stringify(process.env.SC_REDIRECT_URI || '')
 }
 
 // ------------------------------------
