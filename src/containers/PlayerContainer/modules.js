@@ -1,6 +1,8 @@
 /**
  * Created by raphael on 14/07/16.
  */
+ import Music from '../../models/Music'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -61,7 +63,9 @@ export const actions = {
     pause,
     stop
 }
-const musicPlayStatusHandler = (state, action) => Object.assign({},{MUSIC_STATUS: action.payload})
+
+const musicPlayStatusHandler = (state, action) => Object.assign({}, state.player.music, {status: action.payload})
+
 const ACTION_HANDLERS = {
     [PLAY]: musicPlayStatusHandler,
     [PAUSE]: musicPlayStatusHandler,
@@ -71,7 +75,22 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {MUSIC_STATUS: 'STOPPED'}
+let model = Music()
+const initialState = {
+    music: {
+      status: 'STOPPED',
+      player: null,
+      model
+    },
+    progressBar: {
+      mouseOver: false,
+      mouseDown: false,
+      width: '0px',
+      width__mouse: '0px'
+    },
+    menu: false
+  }
+
 export default function playerReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
 

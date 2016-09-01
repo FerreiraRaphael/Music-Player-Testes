@@ -129,10 +129,7 @@ const mapActionCreators = {
     pause,
     stop
 }
-
-const mapStateToProps = (state) => ({
-    MUSIC_STATUS: state.player.MUSIC_STATUS
-})
+const mapStateToProps = (state) => ({ ...state.player })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
