@@ -20,15 +20,6 @@ class PlayerContainer extends React.Component{
   // ------------------------------------
   constructor(props,dispatch){
     super(props)
-    this.state = {
-      progressBar: {
-        mouseOver: false,
-        mouseDown: false,
-        width: '0px',
-        width__mouse: '0px'
-      },
-      menu: false
-    }
   }
 
   componentDidMount(){
@@ -111,8 +102,8 @@ class PlayerContainer extends React.Component{
       onMouseOutHandler={::this.onMouseOutHandler}
       onMouseMoveHandler={::this.onMouseMoveHandler}
       toggleMenu={::this.toggleMenu}
-      progressBar={this.state.progressBar}
-      menu={this.state.menu}
+      progressBar={this.props.progressBar}
+      menu={this.props.menu}
       play={this.props.play}
       pause={this.props.pause}
       MUSIC_STATUS={this.props.MUSIC_STATUS}
@@ -144,5 +135,20 @@ const mapStateToProps = (state) => ({ ...state.player })
  Selectors are efficient. A selector is not recomputed unless one of its arguments change.
  Selectors are composable. They can be used as input to other selectors.
  https://github.com/reactjs/reselect    */
+import Music from '../../models/Music'
+PlayerContainer.propTypes = {
+  menu: React.PropTypes.bool.isRequired,
+  music: React.PropTypes.instanceOf(Music).isRequired,
+  player: React.PropTypes.object,
+  pause: React.PropTypes.func.isRequired,
+  play: React.PropTypes.func.isRequired,
+  progressBar: React.PropTypes.shape({
+    mouseDown: React.PropTypes.bool.isRequired,
+    mouseOver: React.PropTypes.bool.isRequired,
+    width: React.PropTypes.string.isRequired,
+    width__mouse: React.PropTypes.string.isRequired
+  }).isRequired,
+  stop:React.PropTypes.func.isRequired,
+}
 
 export default connect(mapStateToProps, mapActionCreators)(PlayerContainer)

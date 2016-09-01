@@ -1,11 +1,10 @@
-const User = (object = {}) => {
-  let model = {
-    id:             '',
-    username:       '',
-    permalink_url:  '',
-    avatar_url:     ''
-  }
-  Object.keys(model).forEach( key => model[key] = object[key] || model[key] )
-  return model
+function User(object = {}){
+  "use strict"
+  this.id             = '',
+  this.username       = '',
+  this.permalink_url  = '',
+  this.avatar_url     = ''
+  let me = this
+  Object.keys(me).forEach( key => me[key] = object[key] || me[key] )
 }
 export default User

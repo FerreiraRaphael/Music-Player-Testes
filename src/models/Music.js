@@ -1,23 +1,23 @@
 import User from './User'
 
-const Music = (object = {}) => {
-  let user = object.user ? User(object.user) : User()
-  let model = {
-    user,
-    id:             '',
-    title:          '',
-    permalink_url:  '',
-    artwork_url:    '',
-    purchase_url:   '',
-    duration:       '',
-    genre:          '',
-    tag_list:       '',
-    downloadable:   '',
-    download_url:   '',
-    stream_url:     ''
-  }
-  Object.keys(model).forEach( key => model[key] = object[key] || model[key] )
-  return model
+function Music(object = {}){
+  "use strict"
+  let user = object.user ? new User(object.user) : new User()
+  this.user           = user,
+  this.id             = '',
+  this.title          = '',
+  this.permalink_url  = '',
+  this.artwork_url    = '',
+  this.purchase_url   = '',
+  this.duration       = '',
+  this.genre          = '',
+  this.tag_list       = '',
+  this.downloadable   = '',
+  this.download_url   = '',
+  this.stream_url     = '',
+  this.status         = ''
+  let me = this
+  Object.keys(me).forEach( key => me[key] = object[key] || me[key] )
 }
 
 export default Music
