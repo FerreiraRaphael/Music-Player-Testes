@@ -2,6 +2,11 @@
  * Created by raphael on 14/07/16.
  */
 // ------------------------------------
+// Imports
+// ------------------------------------
+import Music from '../../models/Music'
+
+// ------------------------------------
 // Constants
 // ------------------------------------
 export const PLAY = 'PLAY'
@@ -13,17 +18,26 @@ export const MOUSE_UP_PROGRESS_BAR = 'MOUSE_UP_PROGRESS_BAR'
 export const MOUSE_MOVE_PROGRESS_BAR = 'MOUSE_MOVE_PROGRESS_BAR'
 export const MOUSE_OVER_PROGRESS_BAR = 'MOUSE_OVER_PROGRESS_BAR'
 export const MOUSE_OUT_PROGRESS_BAR = 'MOUSE_OUT_PROGRESS_BAR'
-export const FORWARD = 'FORWARD'
-export const BACKWARD = 'BACKWARD'
-export const VOLUME_CHANGE = 'VOLUME_CHANGE'
-export const TOGGLE_RANDOM = 'TOGGLE_RANDOM'
-export const TOGGLE_REPEAT = 'TOGGLE_REPEAT'
+// export const FORWARD = 'FORWARD'
+// export const BACKWARD = 'BACKWARD'
+// export const VOLUME_CHANGE = 'VOLUME_CHANGE'
+// export const TOGGLE_RANDOM = 'TOGGLE_RANDOM'
+// export const TOGGLE_REPEAT = 'TOGGLE_REPEAT'
 
 // ------------------------------------
 // Helpers
 // ------------------------------------
 const actionObject = (type,payload) => ({type,payload})
 
+const newState = (state, prop, payload) => {
+  let newState = Object.assign({},state)
+
+  typeof newState[prop] === 'object' ?
+    Object.assign(newState[prop], payload):
+    newState[prop] = payload
+
+  return newState
+}
 
 // ------------------------------------
 // Actions
@@ -33,102 +47,57 @@ export function play ( value = 'PLAYING'){ return actionObject(PLAY, value)}
 
 export function pause ( value = 'PAUSED'){ return actionObject(PAUSE, value)}
 
-// export function play (value = 'PLAYING') {
-//     return {
-//         type: PLAY,
-//         payload: value
-//     }
-// }
-// export function pause (value = 'PAUSED') {
-//     return {
-//         type: PAUSE,
-//         payload: value
-//     }
-// }
+export function stop (value = 'STOPPED') { return actionObject( STOP, value)  }
 
-export function stop (value = 'STOPPED') {
-    return {
-        type: STOP,
-        payload: value
-    }
-}
+export function toggleMenu (value = false) { return actionObject( TOGGLE_MENU, value)  }
 
-export function toggleMenu (value = false) {
-  return {
-    type: TOGGLE_MENU,
-    payload: value
-  }
-}
+export function mouseDownProgressBar (value = { width: '0px'}){ return actionObject( MOUSE_DOWN_PROGRESS_BAR,
+  Object.assign({}, value, {mouseOver:false,mouseDown:true})) }
 
-export function mouseDownProgressBar (value = { width: '0px'}){
-  return {
-    type: MOUSE_DOWN_PROGRESS_BAR,
-    payload: Object.assign({}, value, {mouseOver:false,mouseDown:true})
-  }
-}
+export function mouseUpProgressBar (value = { mouseDown: false }){ return actionObject( MOUSE_UP_PROGRESS_BAR, value)  }
 
-export function mouseUpProgressBar (value = { mouseDown: false }){
-  return {
-    type: MOUSE_UP_PROGRESS_BAR,
-    payload: value
-  }
-}
+export function mouseMoveProgressBar (value = {width:'0px'}){ return actionObject(MOUSE_MOVE_PROGRESS_BAR, value )}
 
-export function mouseMoveProgressBar (value = '0px'){
-  return {
-    type: MOUSE_MOVE_PROGRESS_BAR,
-    payload: value
-  }
-}
-
-export const mouseOverProgressBar = (value = { width__mouse: '0px', mouseOver: false}) => actionObject(MOUSE_OVER_PROGRESS_BAR,value)
+export const mouseOverProgressBar = (value = { width__mouse: '0px', mouseOver: true}) => actionObject(MOUSE_OVER_PROGRESS_BAR, value)
 
 export const mouseOutProgressBar = ( value = { mouseOver: false, width__mouse: '0px' }) => actionObject(MOUSE_OUT_PROGRESS_BAR, value)
-
-
-/*  This is a thunk, meaning it is a function that immediately
- returns a function for lazy evaluation. It is incredibly useful for
- creating async actions, especially when combined with redux-thunk!
-
- NOTE: This is solely for demonstration purposes. In a real application,
- you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
- reducer take care of this logic.  */
-
-// export const doubleAsync = () => {
-//     return (dispatch, getState) => {
-//         return new Promise((resolve) => {
-//             setTimeout(() => {
-//                 dispatch(increment(getState().counter))
-//                 resolve()
-//             }, 200)
-//         })
-//     }
-// }
 
 export const actions = {
     play,
     pause,
     stop,
-    mouseDownProgressBar
+    toggleMenu,
+    mouseDownProgressBar,
+    mouseUpProgressBar,
+    mouseMoveProgressBar,
+    mouseOverProgressBar,
+    mouseOutProgressBar
 }
-const musicPlayStatusHandler = (state, action) => {
-  debugger
-  let newState = state
-  newState.music.status = action.payload
-  return newState
-}
-const progressBarHandler = (state, action) => Object.assign({}, state.progress__bar, action.payload)
+
+// ------------------------------------
+// Handlers
+// ------------------------------------
+//
+
+const musicHandler = (state, action) => (newState(state,'music',{status: action.payload}))
+const progressBarHandler = (state, action) => (newState(state, 'progressBar', action.payload))
+const toggleMenuHandler = (state, action) => (newState(state ,'menu' ,action.payload))
 const ACTION_HANDLERS = {
-    [PLAY]: musicPlayStatusHandler,
-    [PAUSE]: musicPlayStatusHandler,
-    [STOP]: musicPlayStatusHandler,
-    [MOUSE_DOWN_PROGRESS_BAR]: progressBarHandler
+    [PLAY]: musicHandler,
+    [PAUSE]: musicHandler,
+    [STOP]: musicHandler,
+    [TOGGLE_MENU]: toggleMenuHandler,
+    [MOUSE_DOWN_PROGRESS_BAR]: progressBarHandler,
+    [MOUSE_UP_PROGRESS_BAR]: progressBarHandler,
+    [MOUSE_MOVE_PROGRESS_BAR]: progressBarHandler,
+    [MOUSE_OVER_PROGRESS_BAR]: progressBarHandler,
+    [MOUSE_OUT_PROGRESS_BAR]: progressBarHandler
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-import Music from '../../models/Music'
+
 const music = new Music()
 const initialState = {
   music,
@@ -143,6 +112,6 @@ const initialState = {
 }
 export default function playerReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
-    if(handler)console.log(handler(state,action))
+    // if(handler)console.log(handler(state, action))
     return handler ? handler(state, action) : state
 }

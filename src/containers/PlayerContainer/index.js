@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { connect } from 'react-redux'
-import { play, stop, pause} from './modules'
+import {actions} from './modules'
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -33,43 +33,42 @@ class PlayerContainer extends React.Component{
   // Helper Functions
   // ------------------------------------
 
-  updateObjectState(key, props){ this.setState({[key] : Object.assign({}, this.state[key], props)}) }
-
   colorProgressBarHandler(width){
-    let logic = Number(width.replace('px', '')) < Number(this.state.progressBar.width.replace('px',''))
-    this.updateObjectState('progressBar',{ width__mouse: width, mouseOver: logic}) }
+    let logic = Number(width.replace('px', '')) < Number(this.props.progressBar.width.replace('px',''))
+    this.props.mouseOverProgressBar({ width__mouse: width, mouseOver: logic}) }
 
   // ------------------------------------
   // Event functions
   // ------------------------------------
+  eventFunctions(){
+    return {
+      onMouseDownHandler_Music:(e)=>{
+        const body = document.querySelector('body')
+        this.props.mouseDownProgressBar({width: `${e.nativeEvent.clientX}px`})
+        body.classList.toggle(classes.noselect,true)
+        let bodyMouseMove = e => this.props.mouseMoveProgressBar({width: `${e.clientX}px`})
+        body.addEventListener('mousemove', bodyMouseMove)
+        body.addEventListener('mouseup', e => {
+          body.removeEventListener('mousemove', bodyMouseMove)
+          this.props.mouseUpProgressBar()
+          document.querySelector('body').classList.toggle(classes.noselect,false)
+        })},
 
-  onMouseDownHandler_Music(e){
-    const body = document.querySelector('body')
-    this.updateObjectState('progressBar', {mouseOver: false, mouseDown: true, width: `${e.nativeEvent.clientX}px`})
-    body.classList.toggle(classes.noselect,true)
-    let bodyMouseMove = e => this.updateObjectState('progressBar',{width: `${e.clientX}px`})
-    body.addEventListener('mousemove', bodyMouseMove)
-    body.addEventListener('mouseup', e => {
-      body.removeEventListener('mousemove', bodyMouseMove)
-      body.classList.toggle(classes.noselect,false)
-      this.updateObjectState('progressBar', {mouseDown: false})
-     })
-  }
+      onMouseOverHandler:(e)=>{
+        if(this.props.progressBar.mouseDown) return
+        this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`) },
 
-  onMouseOverHandler(e){
-    if(this.state.progressBar.mouseDown) return
-    this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`)
-  }
-  onMouseMoveHandler(e){
-    if(this.state.progressBar.mouseDown) return
-    this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`)
-  }
+      onMouseMoveHandler:(e)=>{
+        if(this.props.progressBar.mouseDown) return
+        this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`) },
 
-  toggleMenu(e){ this.setState({menu: !this.state.menu}) }
+      onToggleMenuHandler:(e)=>{ this.props.toggleMenu(!this.props.menu) },
 
-  onMouseOutHandler(e){
-    this.updateObjectState('progressBar',{ mouseOver: false, width__mouse: 0})
-  }
+      onTogglePlayHandler:()=>{ this.props.music.status === 'PLAYING' ?
+        this.props.pause() : this.props.play() },
+
+      onMouseOutHandler:(e)=>{ this.props.mouseOutProgressBar() }
+    }}
 
   // showVolume(){ this.setState({ showVolume : true }) }
   //
@@ -97,16 +96,12 @@ class PlayerContainer extends React.Component{
 
   render(){
     return <Player
-      onMouseDownHandler_Music={::this.onMouseDownHandler_Music}
-      onMouseOverHandler={::this.onMouseOverHandler}
-      onMouseOutHandler={::this.onMouseOutHandler}
-      onMouseMoveHandler={::this.onMouseMoveHandler}
-      toggleMenu={::this.toggleMenu}
-      progressBar={this.props.progressBar}
-      menu={this.props.menu}
-      play={this.props.play}
-      pause={this.props.pause}
-      MUSIC_STATUS={this.props.MUSIC_STATUS}
+      //onMouseDownHandler_Music={::this.onMouseDownHandler_Music}
+      //onMouseOverHandler={::this.onMouseOverHandler}
+      //onMouseOutHandler={::this.onMouseOutHandler}
+      //onMouseMoveHandler={::this.onMouseMoveHandler}
+      {...::this.eventFunctions()}
+      {...this.props}
     />
   }
 }
@@ -115,12 +110,8 @@ class PlayerContainer extends React.Component{
  Keys will be passed as props to presentational components. Here we are
  implementing our wrapper around increment; the component doesn't care   */
 
-const mapActionCreators = {
-    play,
-    pause,
-    stop
-}
-const mapStateToProps = (state) => ({ ...state.player })
+const mapActionCreators = actions
+const mapStateToProps = (state) => (state.player)
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
@@ -139,16 +130,22 @@ import Music from '../../models/Music'
 PlayerContainer.propTypes = {
   menu: React.PropTypes.bool.isRequired,
   music: React.PropTypes.instanceOf(Music).isRequired,
-  player: React.PropTypes.object,
-  pause: React.PropTypes.func.isRequired,
-  play: React.PropTypes.func.isRequired,
   progressBar: React.PropTypes.shape({
     mouseDown: React.PropTypes.bool.isRequired,
     mouseOver: React.PropTypes.bool.isRequired,
     width: React.PropTypes.string.isRequired,
     width__mouse: React.PropTypes.string.isRequired
   }).isRequired,
+  player: React.PropTypes.object,
+  pause: React.PropTypes.func.isRequired,
+  play: React.PropTypes.func.isRequired,
   stop:React.PropTypes.func.isRequired,
+  toggleMenu:React.PropTypes.func.isRequired,
+  mouseDownProgressBar:React.PropTypes.func.isRequired,
+  mouseUpProgressBar:React.PropTypes.func.isRequired,
+  mouseMoveProgressBar:React.PropTypes.func.isRequired,
+  mouseOverProgressBar:React.PropTypes.func.isRequired,
+  mouseOutProgressBar:React.PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapActionCreators)(PlayerContainer)

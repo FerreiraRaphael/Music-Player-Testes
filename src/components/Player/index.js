@@ -7,6 +7,7 @@ import icones from './icones.scss'
 // Player component
 const Player = props => {
   "use strict";
+  console.log(props)
   const Progress__classes = classNames({
       [classes.nogradient]: props.progressBar.mouseOver,
       [classes.gradient]: !props.progressBar.mouseOver
@@ -22,12 +23,14 @@ const Player = props => {
     zIndex: (!props.progressBar.mouseDown && props.progressBar.mouseOver ) ? 1 : 0,
     width: props.progressBar.mouseDown ? 0 : props.progressBar.width__mouse
   }
+
+
   const Player__Menu__classes = classNames({ [classes.active]: props.menu })
   const Player__play__pause = classNames({
-    [icones.icon_play]: props.MUSIC_STATUS !== 'PLAYING',
-    [icones.icon_pause]: props.MUSIC_STATUS === 'PLAYING'
+    [icones.icon_play]: props.music.status !== 'PLAYING',
+    [icones.icon_pause]: props.music.status === 'PLAYING'
   })
-  const togglePlay = ()=>{ props.MUSIC_STATUS === 'PLAYING' ? props.pause() : props.play()}
+
   return (
   <div className={classes.player__container}>
     <div className={`${classes.player__menu} ${Player__Menu__classes}`}>
@@ -60,7 +63,7 @@ const Player = props => {
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_backward} `}/></div>
-        <div style={ {padding: "6px 5px"} } className={`btn ${classes.player__button}`} onClick={togglePlay}><i className={`${Player__play__pause} ${classes.player__play__pause} `}/></div>
+        <div style={ {padding: "6px 5px"} } className={`btn ${classes.player__button}`} onClick={props.onTogglePlayHandler}><i className={`${Player__play__pause} ${classes.player__play__pause} `}/></div>
         <div className={`btn ${classes.player__button} ${classes.button__forward}`} onClick={props.forward}><i className={`${icones.icon_forward} `}/></div>
         {/*<div className={`btn ${player__collapse}`} onClick={props.collapse}>collapse</div>*/}
         <div className={`btn ${classes.player__button} hidden-xs ${classes.player__volume}`} onClick={props.random}
@@ -80,7 +83,7 @@ const Player = props => {
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.random}><i className={`${icones.icon_random} `}/></div>
         <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.random}><i className={`${icones.icon_infinity} `}/></div>
         <div className={`btn ${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_list} `}/></div>
-        <div className={`btn ${classes.player__button} visible-xs`} onClick={props.toggleMenu}><i className={`${icones.icon_list} `}/></div>
+        <div className={`btn ${classes.player__button} visible-xs`} onClick={props.onToggleMenuHandler}><i className={`${icones.icon_list} `}/></div>
       </li>
     </ul>
   </div>
