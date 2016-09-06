@@ -4,10 +4,16 @@ import classNames from 'classnames'
 import classes from './Player.scss'
 import icones from './icones.scss'
 
+//Helpers
+const millisecondsHandler = milliseconds => {
+  let minutes = ((milliseconds/(1000*60))%60).toFixed(0)
+  let seconds = ((milliseconds/1000)%60).toFixed(0)
+  return `${minutes}:${seconds.length === 1 ? `0${seconds}` : seconds}` }
+
 // Player component
 const Player = props => {
   "use strict";
-  console.log(props)
+
   const Progress__classes = classNames({
       [classes.nogradient]: props.progressBar.mouseOver,
       [classes.gradient]: !props.progressBar.mouseOver
@@ -53,9 +59,10 @@ const Player = props => {
       <li className={classes.player__backward}>
         <div className={`${classes.music__cover} visible-sm-block visible-md-block visible-lg-block`}></div>
         <div className={classes.music__info__container}>
-          <span className={classes.music__info}>Nome Artista - Nome Musica</span>
+          <span className={classes.music__title}>{props.music.title}</span>
+          <span className={classes.music__artist}>{props.music.user.username}</span>
           <span className={classes.music__current__time}>0:00&nbsp;&nbsp;/</span>
-          <span className={classes.music__duration}>&nbsp;&nbsp;5:00</span>
+          <span className={classes.music__duration}>&nbsp;&nbsp;{millisecondsHandler(props.music.duration)}</span>
         </div>
       </li>
       <li className={classes.player__forward}>

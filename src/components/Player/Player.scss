@@ -43,27 +43,33 @@ $progress__second__color: #ffcc33;
   margin: 15px 10px;
 }
 .music__info__container{
-  padding: 18px 5px;
+  padding: 5px 5px;
   max-width: 100%;
   span{
     font-family: 'Libre Franklin', sans-serif !important;
     line-height: 1;
-    font-size: 12px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    font-size: 11px;
   }
+  .music__artist, .music__title{ display: block; }
+  .music__artist{
+    color: #404040;
+  }
+  .music__title{
+    color: darken($progress__first__color, 15%);
+    font-size: 12px;
+    margin: 5px 0px 2px;
+  }
+  .music__current__time{
+    color: darken($progress__first__color, 10%);
+  }
+  .music__duration{
+    color: #404040;
+  }
+}
 
-}
-.music__info{
-  display: block;
-}
-.music__current__time{
-  color: darken($progress__first__color, 10%);
-}
-.music__duration{
-
-}
 .player__menu{
   width: 225px;
   height: 60px;

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { connect } from 'react-redux'
-import {actions} from './modules'
+import {actions, asyncActions} from './modules'
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -27,6 +27,9 @@ class PlayerContainer extends React.Component{
       client_id: __SC_CLIENT_ID__,
       redirect_uri: __SC_REDIRECT_URI__
     });
+    this.props.fetchTrack('https://soundcloud.com/juke-ellington/azide-x-rfen-blowin-os-juke-ellington-remix')
+    // console.log(this.props.music)
+    // this.props.streamTrack(this.props.music)
   }
 
   // ------------------------------------
@@ -64,8 +67,9 @@ class PlayerContainer extends React.Component{
 
       onToggleMenuHandler:(e)=>{ this.props.toggleMenu(!this.props.menu) },
 
-      onTogglePlayHandler:()=>{ this.props.music.status === 'PLAYING' ?
-        this.props.pause() : this.props.play() },
+      // onTogglePlayHandler:()=>{ this.props.music.status === 'PLAYING' ?
+      //   this.props.pause() : this.props.play() },
+      onTogglePlayHandler:()=>{ this.props.togglePlayer(this.props.music.status === 'PLAYING')},
 
       onMouseOutHandler:(e)=>{ this.props.mouseOutProgressBar() }
     }}
@@ -110,7 +114,7 @@ class PlayerContainer extends React.Component{
  Keys will be passed as props to presentational components. Here we are
  implementing our wrapper around increment; the component doesn't care   */
 
-const mapActionCreators = actions
+const mapActionCreators = {...actions, ...asyncActions}
 const mapStateToProps = (state) => (state.player)
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
