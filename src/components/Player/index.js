@@ -39,44 +39,47 @@ const Player = props => {
 
   return (
   <div className={classes.player__container}>
-    <div className={`${classes.player__menu} ${Player__Menu__classes}`}>
-      <div className={`btn ${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_facebook} `}/></div>
-      <div className={`btn ${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
-      <div className={`btn ${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
-      <div className={`btn ${classes.player__button} ${classes.player__volume}`} onClick={props.random}><i className={`${icones.icon_volume} `}/></div>
-      <div className={`btn ${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_random} `}/></div>
-      <div className={`btn ${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_infinity} `}/></div>
-    </div>
+    {/* <div className={`${classes.player__menu} ${Player__Menu__classes}`}>
+      <div className={`${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_facebook} `}/></div>
+      <div className={`${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
+      <div className={`${classes.player__button}`} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
+      <div className={`${classes.player__button} ${classes.player__volume}`} onClick={props.random}><i className={`${icones.icon_volume} `}/></div>
+      <div className={`${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_random} `}/></div>
+      <div className={`${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_infinity} `}/></div>
+    </div> */}
     <ul className={classes.player}>
-      <div className={classes.progress__container} onMouseDown={props.onMouseDownHandler_Music}
-        onMouseOver={props.onMouseOverHandler} onMouseOut={props.onMouseOutHandler}
-        onMouseMove={props.onMouseMoveHandler}>
-        <div className={classes.progress__bar}>
-          <div style={Progress__Mouse__style} className={`${classes.progress__mouse} ${Progress__Mouse__classes}`}></div>
-          <div style={Progress__styles} className={`${classes.progress} ${Progress__classes}`}></div>
-        </div>
-      </div>
       <li className={classes.player__backward}>
         <div className={`${classes.music__cover} visible-sm-block visible-md-block visible-lg-block`}></div>
         <div className={classes.music__info__container}>
-          <span className={classes.music__title}>{props.music.title}</span>
-          <span className={classes.music__artist}>{props.music.user.username}</span>
-          <span className={classes.music__current__time}>0:00&nbsp;&nbsp;/</span>
-          <span className={classes.music__duration}>&nbsp;&nbsp;{millisecondsHandler(props.music.duration)}</span>
+          <span className={classes.music__title}> {props.music.title || `NOME MUITO GRANDE DE QUALQUER MUSICA AI `} </span>
+          <span className={classes.music__artist}> {props.music.user.username || `NOME DO ARTISTA`} </span>
         </div>
+
+      </li>
+      <li className={classes.player__middle}>
+        <div className={`${classes.player__button} `} onClick={props.backward}><i className={`${icones.icon_backward} `}/></div>
+        <div style={{margin: 0}} className={`${classes.player__button}`} onClick={props.onTogglePlayHandler}><i className={`${Player__play__pause} ${classes.player__play__pause} `}/></div>
+        <div className={`${classes.player__button} ${classes.button__forward}`} onClick={props.forward}><i className={`${icones.icon_forward} `}/></div>
+        <div className={classes.progress__container} onMouseDown={props.onMouseDownHandler_Music}
+          onMouseOver={props.onMouseOverHandler} onMouseOut={props.onMouseOutHandler}
+          onMouseMove={props.onMouseMoveHandler}>
+          <div className={classes.progress__bar}>
+            <div style={Progress__Mouse__style} className={`${classes.progress__mouse} ${Progress__Mouse__classes}`}></div>
+            <div style={Progress__styles} className={`${classes.progress} ${Progress__classes}`}></div>
+          </div>
+        </div>
+        <span className={classes.music__current__time}>0:00&nbsp;&nbsp;/</span>
+        <span className={classes.music__duration}>&nbsp;&nbsp;{millisecondsHandler(props.music.duration)}</span>
       </li>
       <li className={classes.player__forward}>
-        <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_facebook} `}/></div>
-        <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
-        <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
-        <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.backward}><i className={`${icones.icon_backward} `}/></div>
-        <div style={ {padding: "6px 5px"} } className={`btn ${classes.player__button}`} onClick={props.onTogglePlayHandler}><i className={`${Player__play__pause} ${classes.player__play__pause} `}/></div>
-        <div className={`btn ${classes.player__button} ${classes.button__forward}`} onClick={props.forward}><i className={`${icones.icon_forward} `}/></div>
-        {/*<div className={`btn ${player__collapse}`} onClick={props.collapse}>collapse</div>*/}
-        <div className={`btn ${classes.player__button} hidden-xs ${classes.player__volume}`} onClick={props.random}
-             onMouseEnter={props.showVolume}
-             onMouseLeave={props.hideVolume}>
-          <div className={`${classes.player__volume__progress__container}`}>
+        <div className={`${classes.player__button} `} onClick={props.backward}><i className={`${icones.icon_facebook} `}/></div>
+        <div className={`${classes.player__button} `} onClick={props.backward}><i className={`${icones.icon_twitter} `}/></div>
+        <div className={`${classes.player__button} `} onClick={props.backward}><i className={`${icones.icon_download} `}/></div>
+        <div className={`${classes.player__button} `} onClick={props.random}><i className={`${icones.icon_random} `}/></div>
+        <div className={`${classes.player__button} `} onClick={props.random}><i className={`${icones.icon_infinity} `}/></div>
+        <div className={`${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_list} `}/></div>
+        <div className={`${classes.player__button} `} >
+          {/* <div className={`${classes.player__volume__progress__container}`}>
             <div className={`${classes.player__volume__progress__box}`}
                  onMouseUp={props.onMouseUpHandler_Volume}
                  onMouseDown={props.onMouseDownHandler_Volume}>
@@ -84,13 +87,10 @@ const Player = props => {
             <div className={`${classes.player__volume__progress__bar}`} >
               <div className={`${classes.player__volume__progress}`}></div>
             </div>
-          </div>
+          </div> */}
           <i className={`${icones.icon_volume} `}/>
         </div>
-        <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.random}><i className={`${icones.icon_random} `}/></div>
-        <div className={`btn ${classes.player__button} hidden-xs`} onClick={props.random}><i className={`${icones.icon_infinity} `}/></div>
-        <div className={`btn ${classes.player__button}`} onClick={props.random}><i className={`${icones.icon_list} `}/></div>
-        <div className={`btn ${classes.player__button} visible-xs`} onClick={props.onToggleMenuHandler}><i className={`${icones.icon_list} `}/></div>
+        <div className={classes.volume__bar} ></div>
       </li>
     </ul>
   </div>

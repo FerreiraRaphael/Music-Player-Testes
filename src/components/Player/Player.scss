@@ -40,56 +40,40 @@ $progress__second__color: #ffcc33;
   background-size: cover;
   background-position: 50% 50%;
   display: inline-block;
-  margin: 15px 10px;
+  // margin: 15px 10px;
 }
 .music__info__container{
-  padding: 5px 5px;
-  max-width: 100%;
+  margin: 1px 5px;
+  max-width: 300px;
   span{
-    font-family: 'Libre Franklin', sans-serif !important;
     line-height: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-size: 11px;
-  }
-  .music__artist, .music__title{ display: block; }
-  .music__artist{
-    color: #404040;
-  }
-  .music__title{
-    color: darken($progress__first__color, 15%);
     font-size: 12px;
-    margin: 5px 0px 2px;
+    color: darken($progress__first__color, 15%);
+    display: block;
   }
-  .music__current__time{
-    color: darken($progress__first__color, 10%);
-  }
-  .music__duration{
+  span+span{
+    margin: 5px 0px;
     color: #404040;
+    font-size: 11px
   }
 }
 
-.player__menu{
-  width: 225px;
-  height: 60px;
-  margin-right: -240px;
-  position: absolute;
-  right: 5px;
-  top: -60px;
-  -webkit-transition: margin 0.3s ease-out;
-  transition: margin 0.3s ease-in-out;
-  &.active{
-    margin-right: 0;
-  }
-  .player__button{
-    background-color: rgba(0, 0, 0, 0.15) !important;
-  }
+.music__current__time{
+  color: darken($progress__first__color, 10%);
+  font-size: 12px;
 }
+.music__duration{
+  color: #404040;
+  font-size: 12px;
+}
+
 .player__container {
   width: 100%;
   position: fixed;
-  height: 55px;
+  height: 45px;
   background: white;
   z-index: 1;
   bottom: 0;
@@ -99,23 +83,24 @@ $progress__second__color: #ffcc33;
 }
 .player {
   display: flex;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  width: 80%;
+  margin: 0 auto;
+  padding: 9px;
   li {
     display: -webkit-flex; /* Safari */
     display: flex;
-      div {
-        /*margin: 10px 15px;*/
-      }
+    padding: 0px 10px;
+    span {
+      font-family: 'Libre Franklin', sans-serif !important;
+    }
   }
 }
 .player__button{
   width: 35px;
   height: 35px;
-  padding: 10px 5px;
+  // padding: 10px 5px;
   border-radius: 50%;
-  margin: 12px 1px;
+  margin: 4px 0px;
   background-color: transparent !important;
   -webkit-transition: color 0.3s ease-out;
   transition: color 0.3s ease-out;
@@ -129,31 +114,24 @@ $progress__second__color: #ffcc33;
   }
 }
 .player__play__pause{
-  margin: 9px 1px;
   font-size: 24px !important;
 }
 .player__backward {
-  flex-grow: 1;
+  width: 25%;
   justify-content: flex-start;
-  max-width: 60%;
-  @media only screen and (max-width: 1200px){
-    max-width: 50%;
-  }
-  @media only screen and (max-width: 992px){
-    max-width: 43%;
-  }
-  @media only screen and (max-width: 767px){
-    max-width: 60%;
-  }
-  @media only screen and (max-width: 480px){
-    max-width: 40%;
-  }
-  /*div {
+}
+
+.player__middle {
+  // width: 50%;
+  flex-grow: 2;
+  justify-content: center;
+  /*i {
     margin: 0 15px;
   }*/
 }
+
 .player__forward {
-  flex-grow: 1;
+  width: 25%;
   justify-content: flex-end;
   /*i {
     margin: 0 15px;
@@ -161,18 +139,16 @@ $progress__second__color: #ffcc33;
 }
 
 .progress__container{
-    position: absolute;
-    right: 0;
-    top: -5px;
     width: 100%;
-    height: 15px;
-    cursor:pointer;
+    height: 20px;
+    cursor: pointer;
+    margin: 5px 15px;
     .progress__bar, .progress, .progress__mouse{
         height: 3px;
     }
     .progress, .progress__container{
       padding: 0 !important;
-      margin: 0 !important;
+      // margin: 0 !important;
     }
 }
 
@@ -213,78 +189,8 @@ $progress__second__color: #ffcc33;
   transition: all 0.05s ease-out;
 }
 
-.player__volume{
-  position: relative;
-}
-.player__volume__progress__container{
-  position: absolute;
-  width: 30px;
-  height:100px;
-  left:5px;
-  top: -100px;
-  background: #eee;
-  -webkit-transform: scaleY(0);
-  -moz-transform: scaleY(0);
-  -ms-transform: scaleY(0);
-  -o-transform: scaleY(0);
-  transform: scaleY(0);
-  -webkit-transition: all 75ms ease-in-out;
-  -moz-transition: all 75ms ease-in-out;
-  -ms-transition: all 75ms ease-in-out;
-  -o-transition: all 75ms ease-in-out;
-  transition: all 75ms ease-in-out;
-  -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,.1);
-  -moz-box-shadow: 0px 2px 4px rgba(0,0,0,.1);
-  box-shadow: 0px 2px 4px rgba(0,0,0,.1);
-  &:before{
-    content: '';
-    background: #eee;
-    height: 10px;
-    width:10px;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    -webkit-box-shadow: -3px 3px 4px rgba(0,0,0,.1);
-    -moz-box-shadow: -3px 3px 4px rgba(0,0,0,.1);
-    box-shadow: -3px 3px 4px rgba(0,0,0,.1);
-    position: absolute;
-    bottom: -5px;
-    left: 11px;
-  }
-}
-.player__volume__progress__box{
-  height:90%;
-  width: 100%;
-  margin: 5px 0;
-  position: absolute;
-  z-index:9999;
-}
-.player__volume__progress__bar{
-  height: 90%;
-  width: 3px;
-  background: rgba(0,0,0,.25);
-  position: absolute;
-  left: 14px;
-  border-radius: 10px;
-  top: 5px;
-}
-.player__volume__progress{
-  height: 100%;
-  width:3px;
-  background: orange;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 0;
-  &:after{
-    content: '';
-    position: absolute;
-    left: -2.4px;
-    top: 0px;
-    width: 8px;
-    height: 8px;
-    border-radius: 10px;
-    background: #fc3;
-  }
+.volume__bar{
+  height: 3px;
+  width: 120px;
+  background: black;
 }

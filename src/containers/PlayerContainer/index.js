@@ -23,11 +23,11 @@ class PlayerContainer extends React.Component{
   }
 
   componentDidMount(){
-    SC.initialize({
-      client_id: __SC_CLIENT_ID__,
-      redirect_uri: __SC_REDIRECT_URI__
-    });
-    this.props.fetchTrack('https://soundcloud.com/juke-ellington/azide-x-rfen-blowin-os-juke-ellington-remix')
+    // SC.initialize({
+    //   client_id: __SC_CLIENT_ID__,
+    //   redirect_uri: __SC_REDIRECT_URI__
+    // });
+    // this.props.fetchTrack('https://soundcloud.com/juke-ellington/azide-x-rfen-blowin-os-juke-ellington-remix')
     // console.log(this.props.music)
     // this.props.streamTrack(this.props.music)
   }
