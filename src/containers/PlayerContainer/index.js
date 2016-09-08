@@ -20,6 +20,11 @@ class PlayerContainer extends React.Component{
   // ------------------------------------
   constructor(props,dispatch){
     super(props)
+    this.state = { progressBar: {
+      width: 0,
+      mouseDown: false,
+      mouseOver: false
+    }}
   }
 
   componentDidMount(){
@@ -35,7 +40,6 @@ class PlayerContainer extends React.Component{
   // ------------------------------------
   // Helper Functions
   // ------------------------------------
-
   colorProgressBarHandler(width){
     let logic = Number(width.replace('px', '')) < Number(this.props.progressBar.width.replace('px',''))
     this.props.mouseOverProgressBar({ width__mouse: width, mouseOver: logic}) }
@@ -46,7 +50,8 @@ class PlayerContainer extends React.Component{
   eventFunctions(){
     return {
       onMouseDownHandler_Music:(e)=>{
-        const body = document.querySelector('body')
+        debugger
+        const body = document.body
         this.props.mouseDownProgressBar({width: `${e.nativeEvent.clientX}px`})
         body.classList.toggle(classes.noselect,true)
         let bodyMouseMove = e => this.props.mouseMoveProgressBar({width: `${e.clientX}px`})
@@ -60,12 +65,6 @@ class PlayerContainer extends React.Component{
       onMouseOverHandler:(e)=>{
         if(this.props.progressBar.mouseDown) return
         this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`) },
-
-      onMouseMoveHandler:(e)=>{
-        if(this.props.progressBar.mouseDown) return
-        this.colorProgressBarHandler(`${(e.nativeEvent.clientX)}px`) },
-
-      onToggleMenuHandler:(e)=>{ this.props.toggleMenu(!this.props.menu) },
 
       // onTogglePlayHandler:()=>{ this.props.music.status === 'PLAYING' ?
       //   this.props.pause() : this.props.play() },
