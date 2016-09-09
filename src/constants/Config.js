@@ -1,0 +1,1 @@
+export const SC_CLIENT_ID = 'f355cf56384ddd44228e0529403558dd'

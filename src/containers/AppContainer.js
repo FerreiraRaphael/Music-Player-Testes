@@ -1,3 +1,6 @@
+import 'babel-polyfill';
+import 'fastclick';
+import 'isomorphic-fetch';
 import React, { PropTypes } from 'react'
 import { Router } from 'react-router'
 import { Provider } from 'react-redux'

@@ -3,7 +3,7 @@ import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import { makeRootReducer , injectReducer} from './reducers'
 import playerReducer from '../containers/PlayerContainer/modules'
-
+import playerListReducer from '../containers/PlayerListContainer/modules'
 export default (initialState = {}, history) => {
   // ======================================================
   // Middleware Configuration
@@ -25,7 +25,10 @@ export default (initialState = {}, history) => {
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createStore(
-    makeRootReducer({player: playerReducer}),
+    makeRootReducer({
+        player: playerReducer,
+        playerList: playerListReducer
+      }),
     initialState,
     compose(
       applyMiddleware(...middleware),

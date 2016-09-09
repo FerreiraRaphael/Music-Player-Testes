@@ -1,17 +1,15 @@
-/**
- * Created by raphael on 14/07/16.
- */
 // ------------------------------------
 // Imports
 // ------------------------------------
 import { FormatUrl } from '../../utils/UrlFormaters'
 import { normalize } from 'normalizr'
-import { musicSchema } from '../../constants/Schemas'
 import merge from 'lodash/merge'
 import union from 'lodash/union'
+import { playlistSchema } from '../../constants/Schemas'
+import { musicSchema } from '../../constants/Schemas'
 
 // ------------------------------------
-// Constants
+// Types
 // ------------------------------------
 export const ADD_MUSIC = 'ADD_MUSIC'
 
@@ -35,6 +33,10 @@ const newState = (state, prop, payload) => {
 // ------------------------------------
 //
 export function addMusic ( music = {} ) { return actionObject(ADD_MUSIC, music)}
+// export function testMergeUnion( music ={}) {
+//
+// }
+
 
 export const actions = {
     addMusic
@@ -44,11 +46,22 @@ export const actions = {
 // Async Actions
 // ------------------------------------
 export const fetchTrack = url => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     fetch(FormatUrl(url))
       .then(response => response.json())
-      .then(track => console.log(normalize(track, musicSchema)))
+      .then(track => {
+        let playlist = normalize(track, playlistSchema)
+        dispatch(addMusic(playlist.entities))
+      })
       .catch(e => { throw e } )
+  }
+}
+
+export const testMergeUnion = track => {
+  return (dispatch, getState) => {
+    console.log(track.entities,
+      merge({}, getState(), {
+        playerList:{}}))
   }
 }
 
@@ -61,7 +74,8 @@ export const asyncActions = {
 // ------------------------------------
 //
 
-const normalHandler = (state, action) => (Object.assign({}, state, action.payload))
+const normalHandler = (state, action) => merge({}, state, action.payload)
+
 const ACTION_HANDLERS = {
     [ADD_MUSIC]: normalHandler
 }
@@ -71,10 +85,10 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 
 const initialState = {
-  playingMusicIndex: 0,
-  music: {user:{}}
+  playlist: [],
+  history: []
 }
-export default function playerReducer (state = initialState, action) {
+export default function playerListReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
     // if(handler)console.log(handler(state, action))
     return handler ? handler(state, action) : state
