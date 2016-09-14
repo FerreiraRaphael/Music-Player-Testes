@@ -61,9 +61,10 @@ export const asyncActions = {
 // ------------------------------------
 //
 
-const normalHandler = (state, action) => (Object.assign({}, state, action.payload))
+const normalHandler = (state, action) => {
+  return (Object.assign({}, state, action.payload))}
 const ACTION_HANDLERS = {
-    [ADD_MUSIC]: normalHandler
+    // [ADD_MUSIC]: normalHandler
 }
 
 // ------------------------------------

@@ -51,6 +51,7 @@ export const fetchTrack = url => {
       .then(response => response.json())
       .then(track => {
         let playlist = normalize(track, playlistSchema)
+        debugger
         dispatch(addMusic(playlist.entities))
       })
       .catch(e => { throw e } )
@@ -85,8 +86,8 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 
 const initialState = {
-  playlist: [],
-  history: []
+  playlist: {},
+  history: {}
 }
 export default function playerListReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]

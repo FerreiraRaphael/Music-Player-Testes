@@ -4,11 +4,6 @@ import PlayerContainer from '../../containers/PlayerContainer'
 import PlayerListContainer from '../../containers/PlayerListContainer'
 import classes from './CoreLayout.scss'
 import '../../styles/core.scss'
-import './polyfills'
-// import 'materialize-css/sass/materialize.scss'
-// import 'materialize-css/dist/js/materialize.js'
-// import './materialize.js'
-
 
 export const CoreLayout = ({ children }) => (
   <div>

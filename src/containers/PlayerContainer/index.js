@@ -20,7 +20,6 @@ export class PlayerContainer extends React.Component{
     }} }
 
   componentDidMount(){
-    // this.props.fetchTrack('https://soundcloud.com/timeless-network/alex-porter-break-it-down')
   }
 
   render(){
