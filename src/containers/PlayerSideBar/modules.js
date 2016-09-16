@@ -2,11 +2,10 @@
 // Imports
 // ------------------------------------
 import { FormatUrl } from '../../utils/UrlFormaters'
-import { normalize } from 'normalizr'
+import { normalize, arrayOf } from 'normalizr'
 import merge from 'lodash/merge'
 import union from 'lodash/union'
-import { playlistSchema } from '../../constants/Schemas'
-import { musicSchema } from '../../constants/Schemas'
+import { playlistSchema, musicSchema } from '../../constants/Schemas'
 
 // ------------------------------------
 // Types
@@ -32,7 +31,7 @@ const newState = (state, prop, payload) => {
 // Actions
 // ------------------------------------
 //
-export function addMusic ( music = {} ) { return actionObject(ADD_MUSIC, music)}
+export function addMusic ( music = {} ) { debugger;return actionObject(ADD_MUSIC, music)}
 // export function testMergeUnion( music ={}) {
 //
 // }
@@ -51,7 +50,6 @@ export const fetchTrack = url => {
       .then(response => response.json())
       .then(track => {
         let playlist = normalize(track, playlistSchema)
-        debugger
         dispatch(addMusic(playlist.entities))
       })
       .catch(e => { throw e } )
@@ -75,7 +73,9 @@ export const asyncActions = {
 // ------------------------------------
 //
 
-const normalHandler = (state, action) => merge({}, state, action.payload)
+const normalHandler = (state, action) => {
+  debugger
+  return merge({}, state, action.payload)}
 
 const ACTION_HANDLERS = {
     [ADD_MUSIC]: normalHandler

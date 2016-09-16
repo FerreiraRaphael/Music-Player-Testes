@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../components/Header'
 import PlayerContainer from '../../containers/PlayerContainer'
-import PlayerListContainer from '../../containers/PlayerListContainer'
+import PlayerSideBar from '../../containers/PlayerSideBar'
 import classes from './CoreLayout.scss'
 import '../../styles/core.scss'
 
@@ -14,7 +14,7 @@ export const CoreLayout = ({ children }) => (
       </div>
     </div>
     <PlayerContainer />
-    <PlayerListContainer />
+    <PlayerSideBar />
   </div>
 )
 

@@ -27,7 +27,7 @@ const APP_ENTRY_PATHS = [
   'babel-polyfill',
   'isomorphic-fetch',
   'fastclick',
-  // require.resolve('./polyfills'),
+  require.resolve('./polyfills'),
   paths.client('main.js')
 ]
 

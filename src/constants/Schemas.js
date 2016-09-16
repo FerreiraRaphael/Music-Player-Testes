@@ -8,9 +8,7 @@ const playlist = new Schema('playlist');
 //   user,
 // });
 
-playlist.define({
-  tracks: arrayOf(music),
-});
+playlist.define(arrayOf(music));
 
 export const musicSchema = music;
 export const playlistSchema = playlist;
