@@ -2,39 +2,25 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {actions, asyncActions} from './modules'
 import SideBar from '../../components/SideBar'
-import TabPanel from '../../components/TabPanel'
+import PlayerTabs from '../../components/PlayerTabs'
 import MusicList from '../../components/MusicList'
 
 class PlayerSideBar extends React.Component{
   constructor(props){
     super(props)
+    this.state = {
+      activeTab: 0
+    }
   }
   componentDidMount(){
-    // this.props.fetchTrack('https://soundcloud.com/sofitukker/drinkee-vintage-culture-slow-motion-remix')
-    // this.props.fetchTrack('https://soundcloud.com/robo5official/boasorte1')
   }
   render(){
-    let tabs = [
-      {
-        title: 'teste',
-        content: MusicList,
-        disable: false,
-        active: true
-      },
-      {
-        title: 'teste2',
-        content: MusicList,
-        disable: false,
-        active: false
-      }
-    ]
-    tabs = { tabs }
     return (
-      <SideBar>
-        <TabPanel
-        defaultTab={0}
-        { ...tabs } />
-      </SideBar>
+      <div>
+        <SideBar >
+          <PlayerTabs/>
+        </SideBar>
+      </div>
     )
   }
 }
