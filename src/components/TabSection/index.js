@@ -7,7 +7,7 @@ const TabSection = (props) => {
 
   return (
     <div className={classes.section} data-section={props.title}>
-      {props.content}
+      {props.children}
     </div>
   )
 }

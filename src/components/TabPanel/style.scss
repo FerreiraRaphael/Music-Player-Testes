@@ -4,7 +4,6 @@ $mainTextColor: #2C3E50;
 $accentColor: #673AB7;
 
 .tabContainer {
-    padding: 0 50px;
     background-color: $mainBgColor;
     box-shadow: 0 3px 5px 0 rgba(black,.2);
     .tabs {
@@ -33,8 +32,10 @@ $accentColor: #673AB7;
             }
         }
         .indicator {
+            transition: transform .1s ease;
             position: absolute;
             bottom: 0;
+            left: 0;
             height: 3px;
             background: $accentColor;
         }

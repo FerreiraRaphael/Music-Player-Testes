@@ -16,16 +16,14 @@ class PlayerSideBar extends React.Component{
   render(){
     let tabs = [
       {
-        id:1,
         title: 'teste',
-        content: () => <MusicList/>,
+        content: MusicList,
         disable: false,
         active: true
       },
       {
-        id:2,
         title: 'teste2',
-        content: () => <MusicList/>,
+        content: MusicList,
         disable: false,
         active: false
       }
@@ -34,7 +32,7 @@ class PlayerSideBar extends React.Component{
     return (
       <SideBar>
         <TabPanel
-        defaultTab={1}
+        defaultTab={0}
         { ...tabs } />
       </SideBar>
     )
@@ -46,4 +44,4 @@ class PlayerSideBar extends React.Component{
 
 export default PlayerSideBar
 
-// export default connect(mapStateToProps, mapActionCreators)(PlayerListContainer)
+// export default connect(mapStateToProps, mapActionCreators)(PlayerSideBar)
