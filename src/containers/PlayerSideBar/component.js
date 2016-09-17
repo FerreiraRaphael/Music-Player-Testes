@@ -14,22 +14,28 @@ class PlayerSideBar extends React.Component{
     // this.props.fetchTrack('https://soundcloud.com/robo5official/boasorte1')
   }
   render(){
-    let tags = [
+    let tabs = [
       {
+        id:1,
         title: 'teste',
-        content: MusicList,
-        disable: false
+        content: () => <MusicList/>,
+        disable: false,
+        active: true
       },
       {
+        id:2,
         title: 'teste2',
-        content: MusicList,
-        disable: false
+        content: () => <MusicList/>,
+        disable: false,
+        active: false
       }
     ]
-    let content = MusicList
+    tabs = { tabs }
     return (
       <SideBar>
-        <TabPanel tags={tags}/>
+        <TabPanel
+        defaultTab={1}
+        { ...tabs } />
       </SideBar>
     )
   }

@@ -1,4 +1,6 @@
 import React from 'react'
+import classes from './style.scss'
+
 
 const TabSection = (props) => {
   "use strict"
@@ -11,7 +13,7 @@ const TabSection = (props) => {
 }
 TabSection.proptypes = {
   title: React.PropTypes.string.isRequired,
-  content: React.PropTypes.element.isRequired
+  content: React.PropTypes.func.isRequired
 }
 
 export default TabSection

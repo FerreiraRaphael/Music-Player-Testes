@@ -11,7 +11,7 @@ $accentColor: #673AB7;
         position: relative;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-around;,
+        justify-content: space-around;
         .tab {
             display: block;
             padding: 20px;
@@ -21,17 +21,10 @@ $accentColor: #673AB7;
             white-space: nowrap;
             cursor: pointer;
             color: lighten($mainTextColor, 30);
-            .icon,
             .text {
                 display: inline-block;
                 vertical-align: middle;
                 cursor: pointer;
-            }
-            .icon {
-                font-size: 30px;
-                margin-right: 10px;
-            }
-            .text {
                 font-size: 20px;
             }
             &.active {
