@@ -2,7 +2,7 @@ import React from 'react'
 import Tab from './Tab'
 import Indicator from './Indicator'
 import classes from './style.scss'
-import binder from '../../utils/MethodsBinder'
+import binder from '../../utils/PublicUtils'
 
 class Tabs extends React.Component {
   constructor(props){

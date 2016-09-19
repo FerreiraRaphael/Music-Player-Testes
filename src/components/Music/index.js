@@ -10,7 +10,7 @@ class Music extends React.Component {
       mouseOver: false
     }
   }
-
+  clickHandler(){  }
   mouseOverHandler(){ this.setState({mouseOver: true })}
   mouseOutHandler(){ this.setState({mouseOver: false })}
 

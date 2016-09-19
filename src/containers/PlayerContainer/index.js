@@ -13,17 +13,14 @@ export class PlayerContainer extends React.Component{
   // ------------------------------------
   constructor(props,dispatch){
     super(props)
-    this.state = { progressBar: {
-      width: 0,
-      mouseDown: false,
-      mouseOver: false
-    }} }
+  }
 
   componentDidMount(){
+    this.props.getMusicFromPlayList(this.props.playingMusicIndex)
   }
 
   render(){
-    return <Player {...this.props} /> }
+    return this.props.playingMusicIndex !== 0 ? <Player {...this.props} /> : <div/> }
 }
 
 /*  Object of action creators (can also be function that returns object).

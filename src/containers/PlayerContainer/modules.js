@@ -4,7 +4,7 @@
 // ------------------------------------
 // Imports
 // ------------------------------------
-import { FormatUrl } from '../../utils/UrlFormaters'
+import { getMusic } from '../../utils/MusicUtils'
 import { normalize } from 'normalizr'
 import { musicSchema } from '../../constants/Schemas'
 import merge from 'lodash/merge'
@@ -13,7 +13,7 @@ import union from 'lodash/union'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const ADD_MUSIC = 'ADD_MUSIC'
+export const CHANGE_MUSIC = 'CHANGE_MUSIC'
 
 // ------------------------------------
 // Helpers
@@ -34,27 +34,47 @@ const newState = (state, prop, payload) => {
 // Actions
 // ------------------------------------
 //
-export function addMusic ( music = {} ) { return actionObject(ADD_MUSIC, music)}
+// export const addMusicToPlay = (music={}) => {
+//   playingMusicIndex: 0,
+//   musicId: '',
+//   playing: false
+//   return {}
+// }
 
-export const actions = {
-    addMusic
+export const changeMusic = (playingMusicIndex = 0, musicId="") => {
+  return actionObject(CHANGE_MUSIC,{
+    playingMusicIndex,
+    musicId
+  })
 }
 
+export const getMusicFromPlayList = index => (dispatch, getState) => {
+    let music = getMusic(getState(), index)
+    dispatch(changeMusic(index, music.id || ""))
+}
+
+export const actions = {
+  getMusicFromPlayList
+}
 // ------------------------------------
 // Async Actions
 // ------------------------------------
-export const fetchTrack = url => {
-  return (dispatch) => {
-    fetch(FormatUrl(url))
-      .then(response => response.json())
-      .then(track => console.log(normalize(track, musicSchema)))
-      .catch(e => { throw e } )
-  }
-}
 
-export const asyncActions = {
-  fetchTrack
-}
+//
+//
+// export const fetchTrack = url => {
+//   return (dispatch) => {
+//     fetch(FormatUrl(url))
+//       .then(response => response.json())
+//       .then(track => console.log(normalize(track, musicSchema)))
+//       .catch(e => { throw e } )
+//   }
+// }
+//
+// export const asyncActions = {
+//   play
+//
+// }
 
 // ------------------------------------
 // Handlers
@@ -64,7 +84,7 @@ export const asyncActions = {
 const normalHandler = (state, action) => {
   return (Object.assign({}, state, action.payload))}
 const ACTION_HANDLERS = {
-    // [ADD_MUSIC]: normalHandler
+    [CHANGE_MUSIC]: normalHandler
 }
 
 // ------------------------------------
@@ -73,7 +93,8 @@ const ACTION_HANDLERS = {
 
 const initialState = {
   playingMusicIndex: 0,
-  music: {user:{}}
+  musicId: '',
+  playing: false
 }
 export default function playerReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]

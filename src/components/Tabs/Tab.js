@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './style.scss'
 import classnames from 'classnames'
-import binder from '../../utils/MethodsBinder'
+import binder from '../../utils/PublicUtils'
 "use strict"
 
 class Tab extends React.Component {

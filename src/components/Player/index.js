@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames'
 import classes from './Player.scss'
 import icones from './icones.scss'
+import binder from '../../utils/PublicUtils'
 
 "use strict"
 // ------------------------------------
@@ -47,8 +48,8 @@ class Player extends React.Component {
       currentTime: 0,
       duration: 0
     }
-    this._bind = (...methods) => methods.forEach( method => this[method] = ::this[method] )
-    this._bind('renderMusicInfoSection','renderControlsSection',
+    binder(this,
+          'renderMusicInfoSection','renderControlsSection',
           'renderProgressSection', 'renderExtraActionsSection',
           'mouseOverProgressHandler', 'mouseOutProgressHandler',
           'mouseDownProgressHandler', 'mouseMoveProgressHandler',
@@ -57,6 +58,12 @@ class Player extends React.Component {
           'unbindVolumeMouseEvents','mouseDownVolumeHandler',
           'mouseOverVolumeHandler','mouseOutVolumeHandler')
   }
+
+  // ------------------------------------
+  // Life Circle Functions
+  // ------------------------------------
+
+
 
   // ------------------------------------
   // Progress Bar Events
@@ -112,8 +119,6 @@ class Player extends React.Component {
   mouseOverVolumeHandler(e){ this.setState({mouseOverVolume: true}) }
 
   mouseOutVolumeHandler(e){ this.setState({mouseOverVolume: false}) }
-
-
 
   renderMusicInfoSection() { return (
         <div className={classes.player__section}>
@@ -184,17 +189,18 @@ class Player extends React.Component {
     </div>
   )}
 
-  render() { return (
-  <div className={classes.player__container}>
-    <audio></audio>
-    <div className={classes.player}>
-      {this.renderMusicInfoSection()}
-      {this.renderControlsSection()}
-      {this.renderProgressSection()}
-      {this.renderExtraActionsSection()}
-    </div>
-  </div>
-  )}
+  render() {
+    return (
+      <div className={classes.player__container}>
+        <audio src={this.props.music} ref={audio => this._audio = audio}></audio>
+        <div className={classes.player}>
+          {this.renderMusicInfoSection()}
+          {this.renderControlsSection()}
+          {this.renderProgressSection()}
+          {this.renderExtraActionsSection()}
+        </div>
+      </div>
+      )}
 }
 
 

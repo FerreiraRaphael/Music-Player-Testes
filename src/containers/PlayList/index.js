@@ -13,13 +13,17 @@ class PlayList extends React.Component{
   }
 
   render(){
+    let {playingMusicIndex, musics} = this.props
     return (
-      <MusicList musics={this.props.musics}/>
+      <MusicList playingMusicIndex={playingMusicIndex} musics={musics}/>
     )
   }
 }
 
 const mapActionCreators = {...actions, ...asyncActions}
-const mapStateToProps = (state) => (state.playList)
+const mapStateToProps = (state) => ({
+    ...state.playList,
+    playingMusicIndex: state.player.playingMusicIndex
+  })
 
 export default connect(mapStateToProps, mapActionCreators)(PlayList)

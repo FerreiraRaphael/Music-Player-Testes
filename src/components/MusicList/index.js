@@ -1,15 +1,15 @@
 import React from 'react'
 import Music from '../Music'
 
-const renderMusics = musics => musics.ids.map(id => {
+const renderMusics = (musics, playingMusicIndex) => musics.ids.map((id, index) => {
     let music = musics.list[id]
-    return (<Music key={id} {...music} />)
+    return (<Music key={id} playing={index == playingMusicIndex } index={index} {...music} />)
   })
 
 const MusicList = props => {
   return(
     <div>
-      {renderMusics(props.musics)}
+      {renderMusics(props.musics, props.playingMusicIndex)}
     </div>
   )
 }
