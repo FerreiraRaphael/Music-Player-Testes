@@ -3,7 +3,7 @@ import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import { makeRootReducer , injectReducer} from './reducers'
 import playerReducer from '../containers/PlayerContainer/modules'
-import playerListReducer from '../containers/PlayerSideBar/modules'
+import playlistReducer from '../containers/PlayList/modules'
 export default (initialState = {}, history) => {
   // ======================================================
   // Middleware Configuration
@@ -27,7 +27,7 @@ export default (initialState = {}, history) => {
   const store = createStore(
     makeRootReducer({
         player: playerReducer,
-        playerList: playerListReducer
+        playList: playlistReducer
       }),
     initialState,
     compose(

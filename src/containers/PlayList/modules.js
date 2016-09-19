@@ -5,7 +5,7 @@ import { FormatUrl } from '../../utils/UrlFormaters'
 import { normalize, arrayOf } from 'normalizr'
 import merge from 'lodash/merge'
 import union from 'lodash/union'
-import { playlistSchema, musicSchema } from '../../constants/Schemas'
+import { musicsSchema, musicSchema } from '../../constants/Schemas'
 
 // ------------------------------------
 // Types
@@ -31,7 +31,8 @@ const newState = (state, prop, payload) => {
 // Actions
 // ------------------------------------
 //
-export function addMusic ( music = {} ) { debugger;return actionObject(ADD_MUSIC, music)}
+export function addMusic ( musics = {} ) {
+  return actionObject(ADD_MUSIC, musics) }
 // export function testMergeUnion( music ={}) {
 //
 // }
@@ -49,18 +50,9 @@ export const fetchTrack = url => {
     fetch(FormatUrl(url))
       .then(response => response.json())
       .then(track => {
-        let playlist = normalize(track, playlistSchema)
-        dispatch(addMusic(playlist.entities))
+        dispatch(addMusic(track))
       })
       .catch(e => { throw e } )
-  }
-}
-
-export const testMergeUnion = track => {
-  return (dispatch, getState) => {
-    console.log(track.entities,
-      merge({}, getState(), {
-        playerList:{}}))
   }
 }
 
@@ -73,12 +65,26 @@ export const asyncActions = {
 // ------------------------------------
 //
 
+const addMusicToList = (state, action) => {
+  let {list, ids} = state.musics
+  let music = action.payload
+  let newState = {
+    musics :{
+      ids: list[music.id] ? [...ids] : [...ids, music.id],
+      list: merge({}, list, { [music.id]: music })
+      }
+    }
+  return newState
+  }
+
 const normalHandler = (state, action) => {
+  console.log(merge({}, state, action.payload))
+
   debugger
   return merge({}, state, action.payload)}
 
 const ACTION_HANDLERS = {
-    [ADD_MUSIC]: normalHandler
+    [ADD_MUSIC]: addMusicToList
 }
 
 // ------------------------------------
@@ -86,9 +92,13 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 
 const initialState = {
-  musics: {}
+  musics: {
+    ids: [],
+    list:{}
+  }
 }
-export default function playerListReducer (state = initialState, action) {
+
+export default function playlistReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
     // if(handler)console.log(handler(state, action))
     return handler ? handler(state, action) : state

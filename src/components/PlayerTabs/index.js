@@ -1,7 +1,6 @@
 import React from 'react'
 import { Tabs, Tab } from '../Tabs'
-
-
+import PlayList from '../../containers/PlayList'
 
 class PlayerTabs extends React.Component {
   constructor(props){
@@ -20,7 +19,7 @@ class PlayerTabs extends React.Component {
           <Tab> Historico </Tab>
         </Tabs>
         <div>
-          {activeTab === 0 ? 'É ZERO' : 'É NÃO =['}
+          {activeTab === 0 ? <PlayList /> : 'É NÃO =['}
         </div>
       </div>
     )
