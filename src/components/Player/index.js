@@ -6,6 +6,15 @@ import icones from './icones.scss'
 import binder from '../../utils/PublicUtils'
 import {appendClientID} from '../../utils/UrlFormaters'
 
+//TODO:
+// - Seek bar
+// - Play button
+// - Forward
+// - Backward
+// - Repeat
+// - Shufle
+// - Volume Change
+
 "use strict"
 // ------------------------------------
 // Helpers
@@ -74,7 +83,6 @@ class Player extends React.Component {
   // ------------------------------------
   componentDidMount(){
     this._audio.addEventListener('timeupdate', this.onTimeUpdate)
-    // this._audio.addEventListener('timeupdate', () => console.log('c'))
   }
   componentWillReceiveProps(nextProps){
       nextProps.playing ? this._audio.play() : this._audio.pause()
