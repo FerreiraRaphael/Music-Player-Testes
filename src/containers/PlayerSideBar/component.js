@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {actions, asyncActions} from './modules'
+// import {actions, asyncActions} from './modules'
 import SideBar from '../../components/SideBar'
 import PlayerTabs from '../../components/PlayerTabs'
 import MusicList from '../../components/MusicList'
+
+//TODO: Need to be a component, not container
 
 class PlayerSideBar extends React.Component{
   constructor(props){

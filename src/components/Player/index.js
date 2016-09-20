@@ -7,13 +7,17 @@ import binder from '../../utils/PublicUtils'
 import {appendClientID} from '../../utils/UrlFormaters'
 
 //TODO:
-// - Seek bar
-// - Play button
-// - Forward
-// - Backward
+// - Seek bar   OK
+// - Play button  OK
+// - Forward   OK
+// - Backward   OK
+// - Volume Change  OK
 // - Repeat
 // - Shufle
-// - Volume Change
+//NOTE: Looks like i'm going to need repeat and shuffle state on redux store,
+//      actions of forward and backward, needs to know about this states,
+//      needs a random list when shuffle is on,
+//      Need to thing in a way of recompose this
 
 "use strict"
 // ------------------------------------
@@ -62,6 +66,8 @@ class Player extends React.Component {
       mouseOverProgress: false,
       mouseDownVolume: false,
       mouseOverVolume: false,
+      repeat: false,
+      shuffle: false,
       percent: 0,
       volume: 1,
       currentTime: 0
@@ -75,7 +81,9 @@ class Player extends React.Component {
           'mouseMoveVolumeHandler', 'bindVolumeMouseEvents',
           'unbindVolumeMouseEvents','mouseDownVolumeHandler',
           'mouseOverVolumeHandler','mouseOutVolumeHandler',
-          'onTimeUpdate')
+          'onTimeUpdate','onTogglePlay','onBackward',
+          'onForward','onToggleShuffle','onToggleRepeat',
+          'onToggleVolume','onDownload')
   }
 
   // ------------------------------------
@@ -88,7 +96,7 @@ class Player extends React.Component {
       nextProps.playing ? this._audio.play() : this._audio.pause()
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps, prevState){
     let isAnDiferentSongAndIsPlaying = prevProps.music.stream_url !== this.props.music.stream_url && this.props.playing
     if(isAnDiferentSongAndIsPlaying)
       this._audio.play()
@@ -98,6 +106,7 @@ class Player extends React.Component {
   // Audio Events
   // ------------------------------------
   onTimeUpdate(e){
+    if(this.state.mouseDownProgress) return
     let {currentTime, duration} = e.srcElement
     let percent = (Math.floor(currentTime) /  Math.floor(duration)) * 100
     this.setState({currentTime, percent})
@@ -105,9 +114,13 @@ class Player extends React.Component {
   // ------------------------------------
   // Progress Bar Events
   // ------------------------------------
+  //TODO: Rename Progress for Seek
   mouseMoveProgressHandler(e){
-    let percent = mouseMovePercent(e, this._progress) * 100
-    this.setState({percent}) }
+    let percent = mouseMovePercent(e, this._progress)
+    let currentTime = Math.floor(this._audio.duration * percent)
+    this.setState({percent: percent * 100})
+    this.setState({currentTime})
+  }
 
   bindProgressMouseEvents(){
     document.body.addEventListener('mousemove', this.mouseMoveProgressHandler)
@@ -118,7 +131,9 @@ class Player extends React.Component {
     document.body.removeEventListener('mousemove', this.mouseMoveProgressHandler)
     document.body.removeEventListener('mouseup', this.unbindProgressMouseEvents)
     document.body.classList.toggle(classes.noselect, false)
-    this.setState({ mouseDownProgress: false}) }
+    this.setState({ mouseDownProgress: false})
+    this._audio.currentTime = this.state.currentTime
+  }
 
   mouseDownProgressHandler(e){
     this.setState({ mouseDownProgress: true})
@@ -136,7 +151,9 @@ class Player extends React.Component {
 
   mouseMoveVolumeHandler(e){
     let volume = mouseMovePercent(e, this._volume)
-    this.setState({volume}) }
+    this.setState({volume})
+    this._audio.volume = volume
+   }
 
   bindVolumeMouseEvents(){
     document.body.addEventListener('mousemove', this.mouseMoveVolumeHandler)
@@ -157,6 +174,54 @@ class Player extends React.Component {
 
   mouseOutVolumeHandler(e){ this.setState({mouseOverVolume: false}) }
 
+  // ------------------------------------
+  // Controll actions
+  // ------------------------------------
+  onTogglePlay(){
+    this.props.togglePlay(!this.props.playing)
+  }
+
+  onForward(){
+    this.props.selectMusicAndPlay(this.props.selectedMusicIndex + 1)
+  }
+
+  onBackward(){
+    this.props.selectMusicAndPlay(this.props.selectedMusicIndex - 1)
+  }
+
+  onToggleShuffle(){
+    let { shuffle } = this.state
+    this.setState({shuffle:!shuffle})
+  }
+
+  onToggleRepeat(){
+    let { repeat } = this.state
+    this.setState({repeat:!repeat})
+  }
+
+  onToggleVolume(){
+    let { volume } = this.state
+    if(volume > 0){
+      this._lastVolume = volume
+      this.setState({ volume: 0 })
+      this._audio.volume = 0
+    }
+    else{
+      volume = this._lastVolume || 1
+      this.setState({ volume })
+      this._audio.volume = volume
+    }
+  }
+
+  onDownload(){
+
+  }
+
+
+  // ------------------------------------
+  // Renders
+  // ------------------------------------
+
   renderMusicInfoSection() { return (
         <div className={classes.player__section}>
           <div className={`${classes.music__cover}`}></div>
@@ -168,15 +233,15 @@ class Player extends React.Component {
       )}
 
   renderControlsSection(){
-    const Player__play__pause = classNames({
+    const play__pause = classNames({
       [icones.icon_play]: !this.props.playing,
-      [icones.icon_pause]: this.props.playing
-    })
+      [icones.icon_pause]: this.props.playing })
+
     return (
       <div className={classes.player__section}>
-        <div className={`${classes.player__button} `} onClick={this.props.backward}><i className={`${icones.icon_backward} `}/></div>
-        <div style={{marginTop: '1px'}} className={`${classes.player__button}`} onClick={this.props.onTogglePlayHandler}><i className={`${Player__play__pause} ${classes.player__play__pause} `}/></div>
-        <div className={`${classes.player__button} ${classes.button__forward}`} onClick={this.props.forward}><i className={`${icones.icon_forward} `}/></div>
+        <div className={`${classes.player__button} `} onClick={this.onBackward}><i className={`${icones.icon_backward} `}/></div>
+        <div style={{marginTop: '1px'}} className={`${classes.player__button}`} onClick={this.onTogglePlay}><i className={`${play__pause} ${classes.player__play__pause} `}/></div>
+        <div className={`${classes.player__button} ${classes.button__forward}`} onClick={this.onForward}><i className={`${icones.icon_forward} `}/></div>
       </div>
     )
   }
@@ -215,15 +280,19 @@ class Player extends React.Component {
     </div>
   )}
 
-  renderExtraActionsSection(){ return (
+  renderExtraActionsSection(){
+    const shuffle = classNames({[classes.toggle__button]: this.state.shuffle })
+    const repeat = classNames({[classes.toggle__button]: this.state.repeat })
+    return (
+    //TODO: Random e Inifiny, mudar nomes para shuffle e repeat
     <div className={classes.player__section}>
       <div className={`${classes.player__button} `} onClick={this.props.backward}><i className={`${icones.icon_facebook} `}/></div>
       <div className={`${classes.player__button} `} onClick={this.props.backward}><i className={`${icones.icon_twitter} `}/></div>
-      <div className={`${classes.player__button} `} onClick={this.props.backward}><i className={`${icones.icon_download} `}/></div>
-      <div className={`${classes.player__button} `} onClick={this.props.random}><i className={`${icones.icon_random} `}/></div>
-      <div className={`${classes.player__button} `} onClick={this.props.random}><i className={`${icones.icon_infinity} `}/></div>
-      <div className={`${classes.player__button}`} onClick={this.props.random}><i className={`${icones.icon_list} `}/></div>
-      <div className={`${classes.player__button} `} > <i className={`${icones.icon_volume} `}/> </div>
+      <div className={`${classes.player__button} `} onClick={this.onDownload}><i className={`${icones.icon_download} `}/></div>
+      <div className={`${classes.player__button} ${shuffle}`} onClick={this.onToggleShuffle}><i className={`${icones.icon_random} `}/></div>
+      <div className={`${classes.player__button} ${repeat}`} onClick={this.onToggleRepeat}><i className={`${icones.icon_infinity} `}/></div>
+      <div className={`${classes.player__button}`} onClick={this.onToggleSideBar}><i className={`${icones.icon_list} `}/></div>
+      <div className={`${classes.player__button} `} onClick={this.onToggleVolume}> <i className={`${icones.icon_volume} `}/> </div>
       {this.renderVolume()}
     </div>
   )}
@@ -239,7 +308,8 @@ class Player extends React.Component {
           {this.renderExtraActionsSection()}
         </div>
       </div>
-      )}
+      )
+    }
 }
 
 

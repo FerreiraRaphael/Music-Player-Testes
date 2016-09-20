@@ -11,10 +11,10 @@ export const CoreLayout = ({ children }) => (
       {/*<Header />*/}
       <div className={classes.mainContainer}>
         {children}
+        <PlayerSideBar />
       </div>
     </div>
     <PlayerContainer />
-    <PlayerSideBar />
   </div>
 )
 

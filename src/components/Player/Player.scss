@@ -53,17 +53,21 @@ $font-family: 'Libre Franklin', sans-serif !important;
       width: 100%;
     }
   }
-  .player__button{
-    cursor: pointer;
-    margin: 4px 10px;
-    -webkit-transition: color 0.3s ease-out;
-    transition: color 0.3s ease-out;
-    &:hover{
-        color: $progress__first__color;
-    }
-    .player__play__pause{
-      font-size: 22px !important;
-    }
+}
+
+.player__button{
+  cursor: pointer;
+  margin: 4px 10px;
+  -webkit-transition: color 0.3s ease-out;
+  transition: color 0.3s ease-out;
+  &:hover{
+      color: $progress__first__color;
+  }
+  .player__play__pause{
+    font-size: 22px !important;
+  }
+  &.toggle__button{
+      color: $progress__first__color;
   }
 }
 
