@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { connect } from 'react-redux'
-import {actions, asyncActions} from './modules'
+import {actions, asyncActions} from '../PlayList/modules'
 import Player from 'components/Player'
 
 export class PlayerContainer extends React.Component{
@@ -15,12 +15,18 @@ export class PlayerContainer extends React.Component{
     super(props)
   }
 
-  componentDidMount(){
-    this.props.getMusicFromPlayList(this.props.playingMusicIndex)
+  componentWillReceiveProps(nextProps){
+    let isAnPlay = nextProps.playing
+    let ifNoMusicOn = !this.props.music.id
+    if(ifNoMusicOn && isAnPlay)
+      this.props.selectMusic(nextProps.selectedMusicIndex)
   }
+  // componentDidMount(){
+  //   this.props.getMusicFromPlayList(this.props.playingMusicIndex)
+  // }
 
   render(){
-    return this.props.playingMusicIndex !== 0 ? <Player {...this.props} /> : <div/> }
+    return this.props.music.id ? <Player {...this.props} /> : <div/> }
 }
 
 /*  Object of action creators (can also be function that returns object).
@@ -28,7 +34,7 @@ export class PlayerContainer extends React.Component{
  implementing our wrapper around increment; the component doesn't care   */
 
 const mapActionCreators = {...actions, ...asyncActions}
-const mapStateToProps = (state) => (state.player)
+const mapStateToProps = (state) => (state.playList)
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 

@@ -102,17 +102,31 @@ $font-family: 'Libre Franklin', sans-serif !important;
     color: #404040;
   }
 }
+.player__time{
+  display: inline-block;
+  max-width: 90px;
+  min-width: 90px;
+  span{
+    margin-top: 5px;
+    display: inline-block;
 
+  }
+  .player__current__time{
+    font-weight: 600 !important;
+    width: 35px;
+    color: darken($progress__first__color, 10%);
+  }
+  .player__divider__time{
+    margin: 0 5px;
+  }
+  .player__duration__time{
+    width: 35px;
+    color: #404040;
+  }
+}
 .player__middle {
   flex-grow: 2;
   justify-content: center;
-  span{
-    color: darken($progress__first__color, 10%);
-    margin-top: 5px;
-  }
-  span+span{
-    color: #404040;
-  }
   .progress__container{
       width: 100%;
       height: 20px;

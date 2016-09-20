@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import classes from './Player.scss'
 import icones from './icones.scss'
 import binder from '../../utils/PublicUtils'
+import {appendClientID} from '../../utils/UrlFormaters'
 
 "use strict"
 // ------------------------------------
@@ -25,10 +26,20 @@ const mouseMovePercent = (event, element) => {
     let percent = pos / element.offsetWidth
     return (percent > 1 ? 1 : percent) }
 
+const secondsHandler = seconds => {
+    let minutes = Math.floor(seconds / 60);
+    minutes = (minutes >= 10) ? minutes : "0" + minutes;
+    seconds = Math.floor(seconds % 60);
+    seconds = (seconds >= 10) ? seconds : "0" + seconds;
+    return minutes + ":" + seconds;
+  }
+
 const millisecondsHandler = milliseconds => {
   let minutes = ((milliseconds/(1000*60))%60).toFixed(0)
   let seconds = ((milliseconds/1000)%60).toFixed(0)
   return `${minutes}:${seconds.length === 1 ? `0${seconds}` : seconds}` }
+
+
 
 // ------------------------------------
 // Player Component
@@ -44,9 +55,7 @@ class Player extends React.Component {
       mouseOverVolume: false,
       percent: 0,
       volume: 1,
-      playing: false,
-      currentTime: 0,
-      duration: 0
+      currentTime: 0
     }
     binder(this,
           'renderMusicInfoSection','renderControlsSection',
@@ -56,15 +65,35 @@ class Player extends React.Component {
           'bindProgressMouseEvents', 'unbindProgressMouseEvents',
           'mouseMoveVolumeHandler', 'bindVolumeMouseEvents',
           'unbindVolumeMouseEvents','mouseDownVolumeHandler',
-          'mouseOverVolumeHandler','mouseOutVolumeHandler')
+          'mouseOverVolumeHandler','mouseOutVolumeHandler',
+          'onTimeUpdate')
   }
 
   // ------------------------------------
   // Life Circle Functions
   // ------------------------------------
+  componentDidMount(){
+    this._audio.addEventListener('timeupdate', this.onTimeUpdate)
+    // this._audio.addEventListener('timeupdate', () => console.log('c'))
+  }
+  componentWillReceiveProps(nextProps){
+      nextProps.playing ? this._audio.play() : this._audio.pause()
+  }
 
+  componentDidUpdate(prevProps){
+    let isAnDiferentSongAndIsPlaying = prevProps.music.stream_url !== this.props.music.stream_url && this.props.playing
+    if(isAnDiferentSongAndIsPlaying)
+      this._audio.play()
+  }
 
-
+  // ------------------------------------
+  // Audio Events
+  // ------------------------------------
+  onTimeUpdate(e){
+    let {currentTime, duration} = e.srcElement
+    let percent = (Math.floor(currentTime) /  Math.floor(duration)) * 100
+    this.setState({currentTime, percent})
+  }
   // ------------------------------------
   // Progress Bar Events
   // ------------------------------------
@@ -124,16 +153,16 @@ class Player extends React.Component {
         <div className={classes.player__section}>
           <div className={`${classes.music__cover}`}></div>
           <div className={classes.music__info__container}>
-            <span className={classes.music__title}> {this.props.music.title || `NOME MUITO GRANDE DE QUALQUER MUSICA AI `} </span>
-            <span className={classes.music__artist}> {this.props.music.user.username || `NOME DO ARTISTA`} </span>
+            <span className={classes.music__title}> {this.props.music.title} </span>
+            <span className={classes.music__artist}> {this.props.music.user.username} </span>
           </div>
         </div>
       )}
 
   renderControlsSection(){
     const Player__play__pause = classNames({
-      [icones.icon_play]: this.props.music.status !== 'PLAYING',
-      [icones.icon_pause]: this.props.music.status === 'PLAYING'
+      [icones.icon_play]: !this.props.playing,
+      [icones.icon_pause]: this.props.playing
     })
     return (
       <div className={classes.player__section}>
@@ -143,7 +172,6 @@ class Player extends React.Component {
       </div>
     )
   }
-
   renderProgressSection() {
     const Progress__classes = classNames({
       [classes.progress__mouse]: this.state.mouseOverProgress || this.state.mouseDownProgress })
@@ -156,8 +184,11 @@ class Player extends React.Component {
             <div style={Progress__styles} className={`${classes.progress} ${classes.gradient} ${Progress__classes}`}></div>
           </div>
         </div>
-        <span className={classes.music__current__time}>{millisecondsHandler(this.state.currentTime)}&nbsp;&nbsp;/</span>
-        <span className={classes.music__duration}>&nbsp;&nbsp;{millisecondsHandler(this.state.duration)}</span>
+        <div className={classes.player__time}>
+          <span className={classes.player__current__time}>{secondsHandler(this.state.currentTime)}&nbsp;&nbsp;</span>
+          <span className={classes.player__divider__time}>/</span>
+          <span className={classes.player__duration__time}>&nbsp;&nbsp;{millisecondsHandler(this.props.music.duration)}</span>
+        </div>
       </div>
     )
   }
@@ -192,7 +223,7 @@ class Player extends React.Component {
   render() {
     return (
       <div className={classes.player__container}>
-        <audio src={this.props.music} ref={audio => this._audio = audio}></audio>
+        <audio src={appendClientID(this.props.music.stream_url+'?')} ref={audio => this._audio = audio}></audio>
         <div className={classes.player}>
           {this.renderMusicInfoSection()}
           {this.renderControlsSection()}

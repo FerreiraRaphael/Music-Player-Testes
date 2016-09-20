@@ -2,7 +2,6 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import { makeRootReducer , injectReducer} from './reducers'
-import playerReducer from '../containers/PlayerContainer/modules'
 import playlistReducer from '../containers/PlayList/modules'
 export default (initialState = {}, history) => {
   // ======================================================
@@ -26,7 +25,6 @@ export default (initialState = {}, history) => {
   // ======================================================
   const store = createStore(
     makeRootReducer({
-        player: playerReducer,
         playList: playlistReducer
       }),
     initialState,

@@ -10,14 +10,14 @@ class Music extends React.Component {
       mouseOver: false
     }
   }
-  clickHandler(){  }
   mouseOverHandler(){ this.setState({mouseOver: true })}
   mouseOutHandler(){ this.setState({mouseOver: false })}
 
   render(){
     let backgroundImage = {backgroundImage: `url("${this.props.artwork_url}")`}
     return (
-      <div className={style.container}>
+      <div className={style.container}
+        onClick={() => {this.props.onClick(this.props.index)}}>
         <div onMouseOver={()=> this.mouseOverHandler()}
           onMouseOut={()=> this.mouseOutHandler()}
           className={music__cover} style={backgroundImage}>
