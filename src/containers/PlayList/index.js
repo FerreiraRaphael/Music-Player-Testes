@@ -15,8 +15,8 @@ class PlayList extends React.Component{
   }
 
   componentDidMount(){
-    this.props.fetchTrack('https://soundcloud.com/aqueleabraco/danne-aquele-abraco-009')
-    this.props.fetchTrack('https://soundcloud.com/featurepr/alok-feat-iro-me-and-you-club-version-feature045')
+    // this.props.fetchTrack('https://soundcloud.com/aqueleabraco/danne-aquele-abraco-009')
+    // this.props.fetchTrack('https://soundcloud.com/featurepr/alok-feat-iro-me-and-you-club-version-feature045')
   }
 
   render(){

@@ -13,6 +13,7 @@ import { musicsSchema, musicSchema } from '../../constants/Schemas'
 export const ADD_MUSIC = 'ADD_MUSIC'
 export const SELECT_MUSIC = 'SELECT_MUSIC'
 export const TOGGLE_PLAY = 'TOGGLE_PLAY'
+export const SHOW_FETCHED_MUSIC = 'SHOW_FETCHED_MUSIC'
 // ------------------------------------
 // Helpers
 // ------------------------------------
@@ -43,6 +44,10 @@ export function selectMusic( selectedMusicIndex = 0 ){
 
 export function togglePlay( playing = true ){
   return actionObject(TOGGLE_PLAY, {playing})
+}
+
+export function showFetchedMusic( fetchedMusic = {} ){
+  return actionObject(SHOW_FETCHED_MUSIC, {fetchedMusic})
 }
 
 // ------------------------------------
@@ -76,7 +81,7 @@ export const actions = {
 // ------------------------------------
 // Async Actions
 // ------------------------------------
-export const fetchTrack = url => {
+export const fetchTrackAndAddToPlaylist = url => {
   return (dispatch, getState) => {
     fetch(FormatUrl(url))
       .then(response => response.json())
@@ -87,8 +92,20 @@ export const fetchTrack = url => {
   }
 }
 
+export const fetchTrackAndShowInfo = url => {
+  return (dispatch, getState) => {
+    fetch(FormatUrl(url))
+      .then(response => response.json())
+      .then(track => {
+        dispatch(showFetchedMusic(track))
+      })
+      .catch(e => { throw e } )
+  }
+}
+
 export const asyncActions = {
-  fetchTrack
+  fetchTrackAndAddToPlaylist,
+  fetchTrackAndShowInfo
 }
 
 // ------------------------------------
@@ -126,7 +143,8 @@ const selectMusicHandler = (state, action) => {
 const ACTION_HANDLERS = {
     [ADD_MUSIC]: addMusicHandler,
     [SELECT_MUSIC]: selectMusicHandler,
-    [TOGGLE_PLAY]: mergeState
+    [TOGGLE_PLAY]: mergeState,
+    [SHOW_FETCHED_MUSIC]: mergeState
 }
 
 // ------------------------------------
@@ -139,6 +157,7 @@ const initialState = {
     list:{}
   },
   music: {},
+  fetchedMusic: {},
   selectedMusicIndex: 0,
   playing: false
 }
