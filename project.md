@@ -27,33 +27,39 @@ historic:{
 *foward()thunk*
 ```
 {
+  lista = if shuffle is on ? shuffledList : list
+  addToHistoric(lista[index])
   index + 1
   if there's no more music and repeat is on,
       index = 0
   changeMusicIndex(index)
-  lista = if shuffle is on ? shuffledList : list
   selectMusic(lista[index]) // selectMusic() player action
 }
 ```
 *backward()thunk*
 ```
 {
-  if currentTime is less then 5 segundos
+  if currentTime is less then 5 seconds
     setCurrentTime(0)
   else
-    index - 1
-    if is less than 0 and repeat is on,
-        index = selectedList.lastIndex
-    changeMusicIndex(index)
     lista = if shuffle is on ? shuffledList : list
+    addToHistoric(lista[index])
+    index - 1
+    if index is less than 0 and repeat is on,
+        index = selectedList.length
+    changeMusicIndex(index)
     selectMusic(lista[index]) // selectMusic() player action
 }
 ```
+
+*setShuffleList()*
+
 *updateShuffleList()*
-> shuffle shuffledList
+> shuffle list
 ```
 {
-
+  shuffledList = shuffleList(list.slice(indexPlayingMusic))
+  setShuffleList(shuffleList)
 }
 ```
 
@@ -71,9 +77,25 @@ historic:{
 }
 ```
 
-*removeFromPlaylist(music)*{
+*removeMusic(music)*
+> remove music from playlist
 
+*removeFromPlaylistAndSelect(music)thunk*
+```
+{
+  removeMusic(music)
+  updateShuffleList()
+  if selectedList length is equal to 0
+    selectMusic({})
 }
-*removeFromPlaylistAndSelect(music)thunk*{
+```
 
-}
+**player:**
+*togglePlay()*
+
+*selectMusic()*
+
+*setCurrentTime()*
+
+**historic:**
+*addToHistoric()*
