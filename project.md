@@ -2,8 +2,9 @@
 ```javascript
 playlist:{
   indexPlayingMusic: 0,
-  list: [],
-  shuffledList: [],
+  ids: [],
+  shuffledIds: [],
+  musics: {},
   repeat: false,
   shuffle: false
 }
@@ -13,7 +14,8 @@ player:{
   currentTime: 0
 }
 historic:{
-  list: []
+  ids: []
+  musics: {}
 }
 ```
 #actions
@@ -98,4 +100,19 @@ historic:{
 *setCurrentTime()*
 
 **historic:**
-*addToHistoric()*
+*addToHistoricList(music)thunk*
+*changeHistoricListOfIds(list)*
+*addToHistoric(music)thunk*
+```
+{
+  if music a ready exist, update timespamp
+  else addToHistoricList(music)
+  sortHistoricList()
+}
+```
+*sortHistoricList()thunk*
+```
+{
+
+}
+```
