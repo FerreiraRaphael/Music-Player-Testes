@@ -6,3 +6,10 @@ export function changeMusic(music = types.NEXT){
     music
   }
 }
+
+export function toggleShuffle(toggle = true){
+  return {
+    type: types.TOGGLE_SHUFFLE,
+    toggle
+  }
+}

@@ -11,10 +11,25 @@ describe('Player actions spec', () => {
       expect(actions.changeMusic(types.PREV)).to.have.property('music', types.PREV)
     })
 
-    it('should return the next music by default',() => {
+    it('should return the next as music by default',() => {
       expect(actions.changeMusic()).to.be.deep.equal({
         type: types.CHANGE_MUSIC,
         music: types.NEXT
+      })
+    })
+  })
+
+  describe('Action creator (toggleShuffle)', () => {
+    it('should return a action with type "TOGGLE_SHUFFLE"', () => {
+      expect(actions.toggleShuffle()).to.have.property('type', types.TOGGLE_SHUFFLE)
+    })
+    it('should return a action with property toggle', () => {
+      expect(actions.toggleShuffle(false)).to.have.property('toggle', false)
+    })
+    it('should return true by default', () => {
+      expect(actions.toggleShuffle()).to.be.deep.equal({
+        type:types.TOGGLE_SHUFFLE,
+        toggle: true
       })
     })
   })
