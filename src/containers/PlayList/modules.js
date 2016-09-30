@@ -134,12 +134,6 @@ const selectMusicHandler = (state, action) => {
   return music ? merge({}, state, {selectedMusicIndex,music}) : state
 }
 
-// const normalHandler = (state, action) => {
-//   console.log(merge({}, state, action.payload))
-//
-//   debugger
-//   return merge({}, state, action.payload)}
-
 const ACTION_HANDLERS = {
     [ADD_MUSIC]: addMusicHandler,
     [SELECT_MUSIC]: selectMusicHandler,

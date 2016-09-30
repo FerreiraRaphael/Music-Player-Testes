@@ -14,7 +14,6 @@ class HomeView extends React.Component{
   }
 
   onChangeHandler(e){
-    debugger
     this.props.fetchTrackAndShowInfo(this._i.value)
   }
 
