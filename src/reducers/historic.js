@@ -25,7 +25,12 @@ const ACTION_HANDLERS = {
   [types.ADD_MUSIC_TO_HISTORIC]: addMusicToHistoricHandler
 }
 
-const historic = (state = {}, action) => {
+
+const INITIAL_STATE = {
+  ids: [],
+  musics: {}
+}
+const historic = (state = INITIAL_STATE, action) => {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state,action) : state
