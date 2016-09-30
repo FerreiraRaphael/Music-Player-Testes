@@ -27,3 +27,10 @@ export function addMusic( music = {} ){
     music
   }
 }
+
+export function removeMusic( music = {} ){
+  return {
+    type: types.REMOVE_MUSIC,
+    music
+  }
+}
