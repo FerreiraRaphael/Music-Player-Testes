@@ -10,7 +10,6 @@ playlist:{
 }
 player:{
   isPlaying: bool
-  playingMusic: {}
   currentTime: 0
 }
 historic:{
@@ -20,13 +19,17 @@ historic:{
 ```
 #actions
 **playlist:**
-*changeMusicIndex(index)*
+<!-- *changeMusicIndex(index)* -->
+
+*changeMusic()*
+> it can be a music index or a constant string PREV NEXT
+> Reducer will be responsable for handling this
 
 *toggleShuffle(toggle)*
 
 *toggleRepeat(toggle)*
 
-*foward()thunk*
+<!-- *foward()thunk*
 ```
 {
   lista = if shuffle is on ? shuffledList : list
@@ -63,13 +66,13 @@ historic:{
   shuffledList = shuffleList(list.slice(indexPlayingMusic))
   setShuffleList(shuffleList)
 }
-```
+``` -->
 
 
 *addMusic(music)*
 > add music on playlist
 
-*addToPlaylist(music)thunk*
+<!-- *addToPlaylist(music)thunk*
 ```
 {
   addMusic(music)
@@ -77,12 +80,12 @@ historic:{
   if selectedList length is equal 1 then
     selectMusic(music)
 }
-```
+``` -->
 
 *removeMusic(music)*
 > remove music from playlist
 
-*removeFromPlaylistAndSelect(music)thunk*
+<!-- *removeFromPlaylistAndSelect(music)thunk*
 ```
 {
   removeMusic(music)
@@ -90,12 +93,12 @@ historic:{
   if selectedList length is equal to 0
     selectMusic({})
 }
-```
+``` -->
 
 **player:**
 *togglePlay()*
 
-*selectMusic()*
+<!-- *selectMusic()* -->
 
 *setCurrentTime()*
 
