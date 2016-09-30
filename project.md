@@ -100,19 +100,5 @@ historic:{
 *setCurrentTime()*
 
 **historic:**
-*addToHistoricList(music)thunk*
-*changeHistoricListOfIds(list)*
-*addToHistoric(music)thunk*
-```
-{
-  if music a ready exist, update timespamp
-  else addToHistoricList(music)
-  sortHistoricList()
-}
-```
-*sortHistoricList()thunk*
-```
-{
-
-}
+*addToHistoricList(music)*
 ```
