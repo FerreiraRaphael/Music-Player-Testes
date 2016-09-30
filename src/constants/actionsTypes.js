@@ -4,5 +4,6 @@ const types = {
   PREV: 'PREV',
   CHANGE_MUSIC: 'CHANGE_MUSIC',
   TOGGLE_SHUFFLE: 'TOGGLE_SHUFFLE',
+  TOGGLE_REPEAT: 'TOGGLE_REPEAT'
 }
 export default types

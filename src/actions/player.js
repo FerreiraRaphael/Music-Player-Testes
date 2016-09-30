@@ -13,3 +13,10 @@ export function toggleShuffle(toggle = true){
     toggle
   }
 }
+
+export function toggleRepeat(toggle = true){
+  return {
+    type: types.TOGGLE_REPEAT,
+    toggle
+  }
+}

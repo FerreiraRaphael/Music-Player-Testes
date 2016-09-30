@@ -33,4 +33,21 @@ describe('Player actions spec', () => {
       })
     })
   })
+
+  describe('Action creator (toggleRepeat)', () => {
+    it('should return a action with type "TOGGLE_REPEAT"', () => {
+      expect(actions.toggleRepeat()).to.have.property('type', types.TOGGLE_REPEAT)
+    })
+    it('should return a action with property toggle', () => {
+      expect(actions.toggleRepeat(false)).to.have.property('toggle', false)
+    })
+    it('should return true by default', () => {
+      expect(actions.toggleRepeat()).to.be.deep.equal({
+        type:types.TOGGLE_REPEAT,
+        toggle: true
+      })
+    })
+  })
+  describe('Action creator (addMusic)', () => {})
+  describe('Action creator (removeMusic)', () => {})
 })
