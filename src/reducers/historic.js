@@ -4,6 +4,9 @@ import { merge } from 'lodash'
 const addMusicToHistoricHandler = (state, action) => {
   let {musics, ids} = state
   let { music } = action
+
+  if(!music.id) return state
+
   if(!musics[music.id]){
     ids = [music.id, ...ids]
   }

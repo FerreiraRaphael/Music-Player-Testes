@@ -29,4 +29,7 @@ describe('Historic reducer spec', () => {
       }
     })
   })
+  it('should return the same state if nothing is passed', () => {
+    expect(historic(state,addMusicToHistoric())).to.be.deep.equal(state)
+  })
 })
