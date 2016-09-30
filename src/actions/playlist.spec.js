@@ -1,7 +1,7 @@
-import * as actions from './player'
+import * as actions from './playlist'
 import types from '../constants/actionsTypes'
 
-describe('Player actions spec', () => {
+describe('Playlist actions spec', () => {
   describe('Action creator (changeMusic)', () => {
     it('should return a action with type "CHANGE_MUSIC"',()=>{
       expect(actions.changeMusic()).to.have.property('type', types.CHANGE_MUSIC)
