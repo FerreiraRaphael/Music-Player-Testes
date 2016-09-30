@@ -20,3 +20,10 @@ export function toggleRepeat(toggle = true){
     toggle
   }
 }
+
+export function addMusic( music = {} ){
+  return {
+    type: types.ADD_MUSIC,
+    music
+  }
+}

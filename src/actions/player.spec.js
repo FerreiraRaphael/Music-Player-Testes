@@ -48,6 +48,19 @@ describe('Player actions spec', () => {
       })
     })
   })
-  describe('Action creator (addMusic)', () => {})
+  describe('Action creator (addMusic)', () => {
+    it('should return a action with type "ADD_MUSIC"', () => {
+      expect(actions.addMusic()).to.have.property('type', types.ADD_MUSIC)
+    })
+    it('should return a action with property music', () => {
+      expect(actions.addMusic(false)).to.have.property('music', false)
+    })
+    it('should return a empty object by default', () => {
+      expect(actions.addMusic()).to.be.deep.equal({
+        type:types.TOGGLE_REPEAT,
+        music: {}
+      })
+    })
+  })
   describe('Action creator (removeMusic)', () => {})
 })
