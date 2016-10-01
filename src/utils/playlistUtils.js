@@ -16,3 +16,17 @@ export function shuffle(array) {
 
   return array;
 }
+
+export function shuffleList(array, index){
+  return [
+    ...array.slice(0, index + 1),
+    ...shuffle(array.slice(index+1, array.length))
+  ]
+}
+
+export function removeOnIndex(array, index){
+  return [
+    ...array.slice(0, index),
+    ...array.slice(index+1)
+  ]
+}
