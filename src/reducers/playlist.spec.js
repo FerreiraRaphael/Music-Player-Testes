@@ -2,17 +2,6 @@ import playlist from './playlist'
 import * as actions from '../actions/playlist'
 
 describe('Playlist reducer spec', () => {
-  let state
-  beforeEach(()=>{
-    // state = {
-    //   indexPlayingMusic: 0,
-    //   ids: [],
-    //   shuffledIds: [],
-    //   musics: {},
-    //   repeat: false,
-    //   shuffle: false
-    // }
-  })
   it('should be a function', () => {
     expect(playlist).to.be.a('function')
   })
@@ -83,6 +72,77 @@ describe('Playlist reducer spec', () => {
       returnState = playlist(returnState,actions.addMusic({id:1}))
       expect(returnState).to.be.deep.equal(expectState)
     })
-    // it('should add ')
+  })
+  describe(`removeMusicHandler spec`, ()=>{
+    it(`should return same state if music dosent exist`, () => {
+      let returnState = {
+        indexPlayingMusic: 0,
+        ids: [1,2,3,4],
+        shuffledIds: [],
+        musics: {
+          1:{id:1},
+          2:{id:2},
+          3:{id:3},
+          4:{id:4}
+        },
+        repeat: false,
+        shuffle: false
+      }
+      let expectState = {
+        indexPlayingMusic: 0,
+        ids: [1,2,3,4],
+        shuffledIds: [],
+        musics: {
+          1:{id:1},
+          2:{id:2},
+          3:{id:3},
+          4:{id:4}
+        },
+        repeat: false,
+        shuffle: false
+      }
+      returnState = playlist(returnState, actions.removeMusic({id:5}))
+      expect(returnState).to.be.deep.equal(expectState)
+    })
+    it(`should remove music from playlist`, () => {
+      let returnState = {
+        indexPlayingMusic: 0,
+        ids: [1],
+        shuffledIds: [],
+        musics: {1:{id:1}},
+        repeat: false,
+        shuffle: false
+      }
+      let expectState = {
+        indexPlayingMusic: 0,
+        ids: [],
+        shuffledIds: [],
+        musics: {},
+        repeat: false,
+        shuffle: false
+      }
+      returnState = playlist(returnState, actions.removeMusic({id:1}))
+      expect(returnState).to.be.deep.equal(expectState)
+    })
+    it(`should remove music from shuffled list if shuffle is on`, () => {
+      let returnState = {
+        indexPlayingMusic: 0,
+        ids: [1],
+        shuffledIds: [1],
+        musics: {1:{id:1}},
+        repeat: false,
+        shuffle: true
+      }
+      let expectState = {
+        indexPlayingMusic: 0,
+        ids: [],
+        shuffledIds: [],
+        musics: {},
+        repeat: false,
+        shuffle: true
+      }
+      returnState = playlist(returnState, actions.removeMusic({id:1}))
+      expect(returnState).to.be.deep.equal(expectState)
+    })
   })
 })
