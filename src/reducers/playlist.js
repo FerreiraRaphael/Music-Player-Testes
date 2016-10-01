@@ -1,13 +1,18 @@
 import types from '../constants/actionsTypes'
 import {merge} from 'lodash'
+import {shuffle} from '../utils/playlistUtils'
 
 const addMusicHandler = (state, action) => {
   let {music} = action
   let {id} = music
+  let {indexPlayingMusic} = state
   let ids = !state.musics[id] ? [...state.ids, id] : [...state.ids]
   let shuffledIds = [...state.shuffledIds]
   if(state.shuffle && !state.musics[id]){
-    shuffledIds =  [...state.shuffledIds, id]
+    shuffledIds = [
+      ...ids.slice(indexPlayingMusic)
+      ...shuffle(ids.slice(indexPlayingMusic+1, ids.length))
+    ]
   }
   let newState = {
     ids,

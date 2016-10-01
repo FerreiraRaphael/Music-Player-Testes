@@ -83,36 +83,6 @@ describe('Playlist reducer spec', () => {
       returnState = playlist(returnState,actions.addMusic({id:1}))
       expect(returnState).to.be.deep.equal(expectState)
     })
-    it('should shuffle list if shuffle is on', () => {
-      let returnState = {
-        indexPlayingMusic: 0,
-        ids: [1,2,3,4],
-        shuffledIds: [4,2,3,1],
-        musics: {
-          1:{id:1},
-          2:{id:2},
-          3:{id:3},
-          4:{id:4},
-        },
-        repeat: false,
-        shuffle: true
-      }
-      let expectState = {
-        indexPlayingMusic: 0,
-        ids: [1,2,3,4,5],
-        shuffledIds: [4,2,3,1,5],
-        musics: {
-          1:{id:1},
-          2:{id:2},
-          3:{id:3},
-          4:{id:4},
-          5:{id:5},
-        },
-        repeat: false,
-        shuffle: true
-      }
-      returnState = playlist(returnState,actions.addMusic({id:1}))
-      expect(returnState).not.to.be.deep.equal(expectState)
-    })
+    // it('should add ')
   })
 })
